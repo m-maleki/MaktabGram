@@ -40,8 +40,10 @@ builder.Services.AddScoped<IPostApplicationService, PostApplicationService>();
 builder.Services.AddScoped<IUserApplicationService, UserApplicationService>();
 builder.Services.AddScoped<IFollowerApplicationService, FollowerApplicationService>();
 
+//builder.Services.AddDbContext<AppDbContext>(options =>
+//    options.UseSqlServer("Server=localhost;Database=MaktabGramDb;user id=sa;password=25915491;trust server certificate=true"));
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer("Server=localhost;Database=MaktabGramDb;user id=sa;password=25915491;trust server certificate=true"));
+    options.UseSqlServer("Server=LAPTOP-6U51JF85\\SQL2022;Database=MaktabGram_V1;Trusted_Connection=True;TrustServerCertificate=True;"));
 
 #endregion
 

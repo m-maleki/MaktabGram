@@ -6,13 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MaktabGram.Presentation.MVC.Controllers
 {
-    public class AdminController : Controller
+    public class AdminController(IUserApplicationService userApplicationService) : Controller
     {
         private readonly IUserApplicationService userApplicationService;
-        public AdminController()
-        {
-            userApplicationService = new UserApplicationService();
-        }
+
 
         public IActionResult Index()
         {

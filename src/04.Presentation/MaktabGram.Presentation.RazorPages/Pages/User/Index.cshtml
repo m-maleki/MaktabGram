@@ -1,0 +1,132 @@
+﻿@page
+@model MaktabGram.Presentation.RazorPages.Pages.User.IndexModel
+
+@{
+    Layout = "_AdminLayout";
+}
+<main class="flex-1 overflow-x-hidden overflow-y-auto md:mr-64 p-6 transition-all duration-300">
+
+    <section id="table-section" class="mb-8">
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">مدیریت کاربران</h2>
+
+        <div class="card p-6">
+
+            <a asp-page="Create" class="btn btn-primary p-2 m-2 w-40">ایجاد کاربر</a>
+            <!-- Search Input -->
+            <div class="mb-4">
+                <input type="text" id="user-search" onkeyup="filterTable()" placeholder="جستجو بر اساس نام، ایمیل یا نقش..."
+                       class="p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+
+            <!-- Table Container (Responsive Scroll) -->
+            <div class="overflow-x-auto rounded-lg border border-gray-200">
+                <table class="min-w-full divide-y divide-gray-200" id="user-table">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                شناسه
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                تصویر
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                نام کامل
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                موبایل
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                ایمیل
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                ادمین
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                وضعیت
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                تاریخ ثبت نام
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                عملیات
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200" id="user-table-body">
+                        <!-- Data Rows - Actions changed to buttons -->
+                        @if (Model.Users != null && Model.Users.Any())
+                        {
+                            @foreach (var user in Model.Users)
+                            {
+                                <tr class="hover:bg-gray-50 transition duration-150">
+
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">@user.Id</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <img width="100px" height="100px" style="border-radius: 50%;" src="@user.ImageProfileUrl" />
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">@user.FirstName @user.LastName</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">@user.Mobile</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">@user.Email</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        @{
+                                            if (user.IsAdmin)
+                                            {
+                                                <label style="color:green"> ادمین </label>
+                                            }
+                                            else
+                                            {
+                                                <label style="color:red"> کاربر </label>
+                                            }
+                                        }
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        @{
+                                            if (user.Status)
+                                            {
+                                                <label style="color:green"> فعال </label>
+                                            }
+                                            else
+                                            {
+                                                <label style="color:red"> غیر فعال </label>
+                                            }
+                                        }
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">@user.CreateAtFa</td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        @{
+                                            if (user.Status == true)
+                                            {
+                                                <a asp-page-handler="DeActive" asp-route-userId="@user.Id" class="px-3 py-1 bg-red-500 text-white text-xs rounded-lg hover:bg-red-600 transition duration-150 shadow-md">غیر فعالسازی</a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-page-handler="Active" asp-route-userId="@user.Id" class="px-3 py-1 bg-green-500 text-white text-xs rounded-lg hover:bg-green-600 transition duration-150 shadow-md">فعالسازی</a>
+                                            }
+                                        }
+
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a asp-page="Update" asp-route-id="@user.Id" class="px-3 py-1 bg-yellow-500 text-white text-xs rounded-lg hover:bg-green-600 transition duration-150 shadow-md">ویرایش</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+
+                        }
+
+
+
+
+                        <!-- More Data Rows can be added here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+</main>
+
