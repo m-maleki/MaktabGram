@@ -1,0 +1,92 @@
+﻿@page
+@model MaktabGram.Presentation.RazorPages.Pages.User.UpdateModel
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<main class="flex-1 overflow-x-hidden overflow-y-auto md:mr-64 p-6 transition-all duration-300">
+
+    <!-- 3. Forms Section - Expanded with more input types -->
+    <section id="forms-section" class="mb-8">
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">فرم ثبت یا ویرایش اطلاعات</h2>
+        <div class="card p-6">
+            <form method="post"  enctype='multipart/form-data'>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <input type="hidden" asp-for="model.Id"></input>
+                    <!-- First Name -->
+                    <div>
+                        <label for="form_first_name" class="block text-sm font-medium text-gray-700 mb-1">نام</label>
+                        <input type="text" id="form_first_name" asp-for="model.FirstName" placeholder="نام خود را وارد کنید"
+                               class="mt-1 p-3 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+                    </div>
+
+                    <!-- Last Name -->
+                    <div>
+                        <label for="form_last_name" class="block text-sm font-medium text-gray-700 mb-1">نام خانوادگی</label>
+                        <input type="text" id="form_last_name" asp-for="model.LastName" placeholder="نام خانوادگی را وارد کنید"
+                               class="mt-1 p-3 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+                    </div>
+
+                    <!-- Email -->
+                    <div>
+                        <label for="form_email" class="block text-sm font-medium text-gray-700 mb-1">ایمیل</label>
+                        <input type="email" id="form_email" asp-for="model.Email" placeholder="example@domain.com"
+                               class="mt-1 p-3 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+                    </div>
+                    <!-- Mobile -->
+                    <div>
+                        <label for="form_mobile" class="block text-sm font-medium text-gray-700 mb-1">موبایل</label>
+                        <input type="text" id="form_mobile" asp-for="model.Mobile" placeholder="09121345678"
+                               class="mt-1 p-3 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+                    </div>
+
+                    <!-- Username -->
+                    <div>
+                        <label for="form_Username" class="block text-sm font-medium text-gray-700 mb-1">نام کاربری</label>
+                        <input type="text" id="form_Username" asp-for="model.Username" placeholder="09121345678"
+                               class="mt-1 p-3 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+                    </div>
+
+                    <!-- Password -->
+                    <div>
+                        <label for="form_password" class="block text-sm font-medium text-gray-700 mb-1">کلمه عبور</label>
+                        <input type="password" asp-for="model.Password"
+                               class="mt-1 p-3 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+                    </div>
+
+
+                    <!-- Role Select -->
+                    <div>
+                        <label for="form_role" class="block text-sm font-medium text-gray-700 mb-1">نقش</label>
+                        <select id="form_role" asp-for="model.IsAdmin"
+                                class="mt-1 p-3 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 bg-white">
+                            <option value="" disabled selected>انتخاب نقش</option>
+                            <option value="True">مدیر</option>
+                            <option value="False">کاربر</option>
+                        </select>
+                    </div>
+
+                    <!-- File/Image Upload -->
+                    <div>
+                        <label for="image_upload" class="block text-sm font-medium text-gray-700 mb-1">ورود عکس/فایل</label>
+                        <input type="file" id="image_upload" asp-for="model.ImgProfile" accept="image/*"
+                        class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 transition duration-150 cursor-pointer">
+                    </div>
+                </div>
+
+                <!-- Radio Buttons and Checkboxes -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 pt-4 border-t border-gray-100">
+
+                    <!-- Submit Button -->
+                    <div class="flex justify-end">
+                        <button type="submit"
+                                class="w-full sm:w-auto px-8 py-3 border border-transparent rounded-lg shadow-md text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150">
+                            ثبت نهایی اطلاعات
+                        </button>
+                    </div>
+            </form>
+        </div>
+    </section>
+</main>
+
