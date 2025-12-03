@@ -1,295 +1,250 @@
 ﻿@page
 @model MaktabGram.Presentation.RazorPages.Pages.Account.ProfileModel
 @{
-    Layout = "";
+    ViewData["Title"] = $"{Model.Profile.UserName} | مکتب‌گرام";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پروفایل مسعود مالکی | مکتب گرام</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Vazirmatn Font (Persian) -->
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
-    <style>
-        /*
-                         * استایل‌های MaktabGram (هماهنگ با فید و ورود)
-                         */
-
-        body {
-            font-family: 'Vazirmatn', sans-serif;
-            background-color: #F8F8F8; /* رنگ پس‌زمینه روشن‌تر برای صفحه پروفایل */
-            color: #262626;
-            padding-top: 60px; /* فضای بالا برای هدر ثابت */
-        }
-
-        /* هدر ثابت بالا */
-        .main-header {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 100%;
-            background-color: white;
-            border-bottom: 1px solid #E5E7EB;
-            z-index: 50;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        }
-
-        /* دکمه اصلی (مانند دکمه‌های ثبت نام/ورود) */
-        .primary-button {
-            background-image: linear-gradient(to right, #6B46C1 0%, #F687B3 100%);
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 8px rgba(107, 70, 193, 0.3);
-        }
-
-            .primary-button:hover {
-                opacity: 0.9;
-                transform: translateY(-1px);
-            }
-
-        /* دکمه ثانویه (فالو شده) */
-        .secondary-button {
-            background-color: #E5E7EB; /* خاکستری روشن */
-            color: #4B5563; /* خاکستری تیره */
-            border: 1px solid #D1D5DB;
-            transition: all 0.2s ease;
-        }
-
-            .secondary-button:hover {
-                background-color: #D1D5DB;
-            }
-
-        /* استایل گرید تصاویر (برای نمایش بهتر در دسکتاپ) */
-        .post-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 4px;
-        }
-
-        /* استایل برای آواتار پروفایل */
-        .profile-avatar-container {
-            padding: 4px;
-            background: linear-gradient(45deg, #6B46C1, #F687B3, #FBBF24);
-            border-radius: 50%;
-            flex-shrink: 0;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        /* استایل‌های موبایل برای ناوبری پایین */
-        .mobile-nav {
-            position: fixed;
-            bottom: 0;
-            right: 0;
-            width: 100%;
-            background-color: white;
-            border-top: 1px solid #E5E7EB;
-            z-index: 50;
-        }
-
-        /* استایل اختصاصی برای دایره هایلایت جدید */
-        .new-highlight-circle {
-            border: 1px solid #D1D5DB;
-        }
-    </style>
-</head>
-<body class="overflow-x-hidden">
-
-    <!-- منطق جاوا اسکریپت - ساخت Placeholderها و تعاملات -->
-    <script>
-        // تابع کمکی برای ساخت آواتار Placeholder با حرف
-        function createAvatarPlaceholder(initial, size) {
-            const fontSize = size === 'large' ? '60px' : '40px';
-            const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="50" fill="#4F46E5"/>
-                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="${fontSize}" fill="#FFFFFF" font-family="Vazirmatn, sans-serif">${initial}</text>
-            </svg>`;
-            return 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
-        }
-
-
-        window.onload = function() {
-            // جایگذاری آواتار اصلی پروفایل و ناوبری پایین
-            document.querySelectorAll('.profile-avatar-img').forEach(img => {
-                img.src = profileAvatarLarge;
-            });
-
-            // جایگذاری تصاویر گرید پست‌ها (بدون متن)
-            document.querySelectorAll('.post-grid-item img').forEach((img, index) => {
-                img.src = createPlaceholder(index, false);
-            });
-
-            // جایگذاری تصاویر هایلایت‌ها (با متن برای تمایز)
-            document.getElementById('highlight-design-img').src = createPlaceholder(5, true, 'طراحی');
-            document.getElementById('highlight-code-img').src = createPlaceholder(2, true, 'کد');
-
-            lucide.createIcons();
-        };
-
-        // تابع تغییر حالت دکمه فالو
-        function toggleFollow() {
-            const btn = document.getElementById('follow-button');
-            const textSpan = document.getElementById('follow-text');
-
-            if (btn.classList.contains('primary-button')) {
-                // اگر دکمه در حالت 'دنبال کردن' بود
-                btn.classList.remove('primary-button', 'text-white');
-                btn.classList.add('secondary-button');
-                textSpan.textContent = 'دنبال شده';
-            } else {
-                // اگر دکمه در حالت 'دنبال شده' بود
-                btn.classList.add('primary-button', 'text-white');
-                btn.classList.remove('secondary-button');
-                textSpan.textContent = 'دنبال کردن';
-            }
-        }
-    </script>
-
-    <!-- نوار ناوبری بالا (Header) - هماهنگ با صفحه اصلی و ثابت -->
-    <header class="main-header">
-        <div class="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
-            <!-- لوگوی MaktabGram -->
-            <div class="text-2xl font-black text-gray-800 tracking-tight">
-                MaktabGram
-            </div>
-
-            <!-- آیکون‌های اکشن -->
-            <div class="flex items-center space-x-4 space-x-reverse">
-                <a href="#" class="text-gray-800 hover:text-gray-900" title="افزودن پست جدید">
-                    <span data-lucide="plus-square" class="w-6 h-6"></span>
-                </a>
-                <a href="#" class="text-gray-800 hover:text-gray-900" title="اعلان‌ها">
-                    <span data-lucide="heart" class="w-6 h-6"></span>
-                </a>
-                <a href="#" class="text-gray-800 hover:text-gray-900" title="پیام‌ها (Direct)">
-                    <span data-lucide="send" class="w-6 h-6"></span>
-                </a>
-            </div>
-        </div>
-    </header>
-
-    <!-- محتوای اصلی پروفایل -->
-    <main class="max-w-4xl mx-auto pb-16 px-4">
-
-        <!-- بخش هدر پروفایل (اطلاعات و آمار) -->
-        <section class="profile-header bg-white p-6 rounded-xl shadow-lg mb-6 mt-4">
-            <div class="flex items-center justify-between md:space-x-12 md:space-x-reverse">
-
-                <!-- آواتار (نمایش دسکتاپ/تبلت) -->
-                <div class="profile-avatar-container hidden md:block">
-                    <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-white">
-                        <img src="/@Model.Profile.ImgProfileUrl" alt="آواتار پروفایل" class="profile-avatar-img w-full h-full object-cover">
-                    </div>
+<main class="max-w-4xl mx-auto px-4 pt-6 pb-20 md:pb-8">
+    <!-- هدر پروفایل -->
+    <section class="bg-white rounded-2xl shadow-xl p-6 mb-6">
+        <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
+            <!-- آواتار با گرادینت -->
+            <div class="profile-avatar-container">
+                <div class="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                    @if (!string.IsNullOrEmpty(Model.Profile.ImgProfileUrl))
+                    {
+                        <img src="/@Model.Profile.ImgProfileUrl" alt="@Model.Profile.UserName" class="w-full h-full object-cover">
+                    }
+                    else
+                    {
+                        <div class="w-full h-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                            <span class="text-white text-5xl font-bold">@Model.Profile.UserName.Substring(0, 1).ToUpper()</span>
+                        </div>
+                    }
                 </div>
+            </div>
 
-                <!-- آمار (پست‌ها، فالوور، فالویینگ) -->
-                <div class="flex-grow flex justify-around text-center md:flex-initial md:w-3/4">
-                    <div class="md:ml-8">
-                        <p class="font-bold text-xl">@Model.Profile.Posts.Count</p>
-                        <p class="text-gray-500 text-sm">پست‌ها</p>
+            <!-- اطلاعات و آمار -->
+            <div class="flex-1 text-center md:text-right">
+                <h1 class="text-2xl font-bold mb-4">@Model.Profile.UserName</h1>
+
+                <div class="flex justify-center md:justify-start gap-10 mb-6 text-center">
+                    <div>
+                        <p class="text-2xl font-bold">
+                            @if (@Model.Profile.Posts is not null)
+                            {
+                                @Model.Profile.Posts.Count
+                            }
+                            else
+                            {
+                                @(0)
+                            }
+                        </p>
+                        <p class="text-sm text-gray-600">پست</p>
                     </div>
                     <div>
-                        <p class="font-bold text-xl">@Model.Profile.FollowerCount</p>
-                        <p class="text-gray-500 text-sm">دنبال‌کنندگان</p>
+                        <p class="text-2xl font-bold">@Model.Profile.FollowerCount</p>
+                        <p class="text-sm text-gray-600">دنبال‌کننده</p>
                     </div>
-                    <div class="md:mr-8">
-                        <p class="font-bold text-xl">@Model.Profile.FollowingCount</p>
-                        <p class="text-gray-500 text-sm">دنبال‌شونده</p>
+                    <div>
+                        <p class="text-2xl font-bold">@Model.Profile.FollowingCount</p>
+                        <p class="text-sm text-gray-600">دنبال‌شونده</p>
                     </div>
                 </div>
-            </div>
 
-            <!-- اطلاعات نام و بایو -->
-            <div class="mt-4">
-                <p class="font-bold text-base">@Model.Profile.UserName</p>
-                <p class="text-sm text-gray-700 mt-1">
-                    @Model.Profile.Bio
-                </p>
-                <a href="#" class="text-sm text-purple-600 hover:underline">لینک وب‌سایت</a>
-            </div>
-
-            <!-- دکمه‌های اکشن -->
-            <div class="flex space-x-2 space-x-reverse mt-4">
-                <button id="follow-button"
-                        class="primary-button flex-1 text-white font-semibold py-2 rounded-lg text-sm"
-                        onclick="toggleFollow()">
-                    <span id="follow-text">دنبال کردن</span>
-                </button>
-                <button class="secondary-button flex-1 font-semibold py-2 rounded-lg text-sm">پیام</button>
-                <button class="secondary-button w-10 h-10 rounded-lg flex items-center justify-center" title="ویرایش پروفایل">
-                    <span data-lucide="settings" class="w-5 h-5"></span>
-                </button>
-            </div>
-        </section>
-
-
-        <!-- منوی تب پست‌ها (پست‌ها، ذخیره شده، تگ شده) -->
-        <section class="border-t border-gray-300">
-            <div class="flex justify-around text-center border-b border-gray-200">
-                <a href="#" class="flex-1 py-3 border-t-2 border-transparent transition-colors duration-150 text-gray-500 hover:text-gray-800 font-medium active-tab border-purple-600 text-purple-600">
-                    <span data-lucide="layout-grid" class="w-5 h-5 inline-block md:ml-2"></span><span class="hidden md:inline">پست‌ها</span>
-                </a>
-                <a href="#" class="flex-1 py-3 border-t-2 border-transparent transition-colors duration-150 text-gray-500 hover:text-gray-800">
-                    <span data-lucide="bookmark" class="w-5 h-5 inline-block md:ml-2"></span><span class="hidden md:inline">ذخیره شده</span>
-                </a>
-                <a href="#" class="flex-1 py-3 border-t-2 border-transparent transition-colors duration-150 text-gray-500 hover:text-gray-800">
-                    <span data-lucide="user" class="w-5 h-5 inline-block md:ml-2"></span><span class="hidden md:inline">تگ شده</span>
-                </a>
-            </div>
-        </section>
-
-        <!-- گالری پست‌ها (گرید ۳x۳) -->
-        <section class="mt-2 post-grid">
-            <!-- آیتم پست ۱ -->
-            @foreach (var post in Model.Profile.Posts)
-            {
-                <a href="#" class="aspect-square relative group post-grid-item">
-                    <img src="/@post.ImgPostUrl" alt="پست ۱" class="w-full h-full object-cover transition-opacity duration-300">
-                    <!-- Overlay: اطلاعات لایک و کامنت در حالت هاور دسکتاپ -->
-                    <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                        <div class="text-white flex space-x-4 space-x-reverse font-bold text-lg">
-                            <span class="flex items-center"><span data-lucide="heart" class="w-5 h-5 fill-white ml-1"></span> @post.LikeCount</span>
-                            <span class="flex items-center"><span data-lucide="message-circle" class="w-5 h-5 fill-white ml-1"></span> @post.CommentCount</span>
-                        </div>
-                    </div>
-                </a>
-            }
-
-
-        </section>
-
-    </main>
-
-    <!-- نوار ناوبری پایین (فقط در موبایل) -->
-    <div class="mobile-nav md:hidden">
-        <div class="flex justify-around items-center h-14">
-            <a href="#" title="خانه" class="text-gray-500 hover:text-gray-800"><span data-lucide="home" class="w-6 h-6"></span></a>
-            <a href="#" title="جستجو" class="text-gray-500 hover:text-gray-800"><span data-lucide="search" class="w-6 h-6"></span></a>
-            <a href="#" title="افزودن پست" class="text-gray-500 hover:text-gray-800"><span data-lucide="plus-square" class="w-6 h-6"></span></a>
-            <a href="#" title="اعلان‌ها" class="text-gray-500 hover:text-gray-800"><span data-lucide="heart" class="w-6 h-6"></span></a>
-            <!-- آیکون پروفایل فعال با حاشیه رنگی -->
-            <a href="#" title="پروفایل" class="text-gray-800 hover:text-gray-900">
-                <div class="w-7 h-7 rounded-full overflow-hidden border-2 border-purple-600">
-                    <img src="" alt="پروفایل" class="profile-avatar-img w-full h-full object-cover">
+                <!-- بایو -->
+                <div class="mb-6 text-sm leading-relaxed">
+                    <p class="font-medium">@Model.Profile.UserName</p>
+                    <p class="text-gray-700 mt-1">@Model.Profile.Bio</p>
                 </div>
-            </a>
+
+                <!-- دکمه‌های اکشن -->
+                <div class="flex gap-3 justify-center md:justify-start">
+                    <a href="/Messages/@Model.Profile.UserName" class="px-8 py-2.5 bg-gray-200 text-gray-800 rounded-lg font-semibold text-sm hover:bg-gray-300 transition">
+                        پیام
+                    </a>
+
+                    @if (!Model.Profile.IsFollower)
+                    {
+                        <a asp-page-handler="Follow" asp-route-id="@Model.Profile.Id" class="btn btn-success">
+                            دنبال کردن
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-page-handler="UnFollow" asp-route-id="@Model.Profile.Id" class="btn btn-danger">
+                            دنبال نکردن
+                        </a>
+                    }
+
+
+                    <button class="p-2.5 bg-gray-200 rounded-lg hover:bg-gray-300 transition">
+                        <i data-lucide="settings" class="w-5 h-5 text-gray-700"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- تب‌ها -->
+    <div class="border-b border-gray-300 sticky top-14 bg-white z-10">
+        <div class="flex justify-around text-center">
+            <button onclick="openTab('posts')" id="tab-posts"
+                    class="tab-btn flex-1 py-4 border-b-2 border-indigo-600 text-indigo-600 font-medium flex items-center justify-center gap-2 active">
+                <i data-lucide="grid-3x3" class="w-5 h-5"></i>
+                <span class="hidden sm:inline">پست‌ها</span>
+            </button>
+            <button onclick="openTab('saved')" id="tab-saved"
+                    class="tab-btn flex-1 py-4 text-gray-500 hover:text-gray-800 transition flex items-center justify-center gap-2">
+                <i data-lucide="bookmark" class="w-5 h-5"></i>
+                <span class="hidden sm:inline">ذخیره‌شده</span>
+            </button>
+            <button onclick="openTab('tagged')" id="tab-tagged"
+                    class="tab-btn flex-1 py-4 text-gray-500 hover:text-gray-800 transition flex items-center justify-center gap-2">
+                <i data-lucide="tag" class="w-5 h-5"></i>
+                <span class="hidden sm:inline">تگ‌شده</span>
+            </button>
         </div>
     </div>
 
-    <!-- فوتر ساده و سفید (فقط در دسکتاپ) -->
-    <footer class="hidden md:block bg-white border-t border-gray-200 py-3 mt-8">
-        <div class="max-w-4xl mx-auto px-4 text-center text-gray-500 text-xs">
-            <p>
-                © ۲۰۲۴ MaktabGram از طرف مسعود مالکی.
-            </p>
+    @if (Model.Profile.IsFollower)
+    {
+        <!-- محتوای تب‌ها -->
+        <div class="mt-6">
+            <!-- تب پست‌ها -->
+            <div id="posts" class="tab-content">
+                @if (Model.Profile.Posts is not null)
+                {
+                    <div class="grid grid-cols-3 gap-1 md:gap-4">
+                        @foreach (var post in Model.Profile.Posts)
+                        {
+                            <a asp-page="/Posts/Details" asp-route-id="@post.PostId" class="aspect-square relative group overflow-hidden rounded-lg">
+
+                                    <img src="/@post.ImgPostUrl" alt="پست" class="w-full h-full object-cover transition-transform group-hover:scale-110 duration-300">
+                                
+                                <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                                    <div class Uly-white flex gap-6 text-lg font-bold">
+                                        <span class="flex items-center gap-2">
+                                            <i data-lucide="heart" class="w-6 h-6 fill-white"></i> @post.LikeCount
+                                        </span>
+                                        <span class="flex items-center gap-2">
+                                            <i data-lucide="message-circle" class="w-6 h-6 fill-white"></i> @post.CommentCount
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-20">
+                        <i data-lucide="camera-off" class="w-20 h-20 text-gray-300 mx-auto mb-4"></i>
+                        <p class="text-xl font-medium text-gray-600">هنوز پستی منتشر نشده</p>
+                    </div>
+                }
+            </div>
+
+            <!-- تب ذخیره‌شده -->
+            <div id="saved" class="tab-content hidden">
+                @if (Model.Profile.SavedPosts is not null)
+                {
+                    <div class="grid grid-cols-3 gap-1 md:gap-4">
+                        @foreach (var post in Model.Profile.SavedPosts)
+                        {
+                            <a href="/Post/@post.PostId" class="aspect-square relative group overflow-hidden rounded-lg">
+                                <img src="/@post.ImgPostUrl" alt="ذخیره شده" class="w-full h-full object-cover transition-transform group-hover:scale-110 duration-300">
+                                <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                                    <div class="text-white flex gap-6 text-lg font-bold">
+                                        <span class="flex items-center gap-2">
+                                            <i data-lucide="heart" class="w-6 h-6 fill-white"></i> @post.LikeCount
+                                        </span>
+                                        <span class="flex items-center gap-2">
+                                            <i data-lucide="message-circle" class="w-6 h-6 fill-white"></i> @post.CommentCount
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-20">
+                        <i data-lucide="bookmark" class="w-20 h-20 text-gray-300 mx-auto mb-4"></i>
+                        <p class="text-xl font-medium text-gray-600">هیچ پستی ذخیره نشده</p>
+                        <p class="text-sm text-gray-500 mt-2">وقتی پستی رو ذخیره کنی، اینجا نمایش داده میشه</p>
+                    </div>
+                }
+            </div>
+
+            <!-- تب تگ‌شده -->
+            <div id="tagged" class="tab-content hidden">
+                @if (Model.Profile.TagPosts is not null)
+                {
+                    <div class="grid grid-cols-3 gap-1 md:gap-4">
+                        @foreach (var post in Model.Profile.TagPosts)
+                        {
+                            <a href="/Post/@post.PostId" class="aspect-square relative group overflow-hidden rounded-lg">
+                                <img src="/@post.ImgPostUrl" alt="تگ شده" class="w-full h-full object-cover transition-transform group-hover:scale-110 duration-300">
+                                <div class="absolute top-2 right-2 bg-white bg-opacity-90 px-2 py-1 rounded text-xs font-bold text-gray-800">
+                                    تگ شدی
+                                </div>
+                                <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                                    <div class="text-white flex gap-6 text-lg font-bold">
+                                        <span class="flex items-center gap-2">
+                                            <i data-lucide="heart" class="w-6 h-6 fill-white"></i> @post.LikeCount
+                                        </span>
+                                        <span class="flex items-center gap-2">
+                                            <i data-lucide="message-circle" class="w-6 h-6 fill-white"></i> @post.CommentCount
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-20">
+                        <i data-lucide="tag" class="w-20 h-20 text-gray-300 mx-auto mb-4"></i>
+                        <p class="text-xl font-medium text-gray-600">هنوز تگ نشدی</p>
+                        <p class="text-sm text-gray-500 mt-2">وقتی کسی تو رو تگ کنه، اینجا نمایش داده میشه</p>
+                    </div>
+                }
+            </div>
         </div>
-    </footer>
+    }
+    else
+    {
+        <div class="mt-6">
+            <!-- تب پست‌ها -->
+            <div id="posts" class="tab-content">
+                <h1>برای دیدن پست ها ابتدا باید این کاربر را دنبال کنید</h1>
+            </div>
+        </div>
+    }
 
-</body>
-</html>
+</main>
 
+@section Scripts {
+    <script>
+        function openTab(tabName) {
+            // مخفی کردن همه تب‌ها
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('border-indigo-600', 'text-indigo-600');
+                btn.classList.add('text-gray-500');
+            });
+
+            // نمایش تب انتخاب شده
+            document.getElementById(tabName).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tabName}`);
+            activeBtn.classList.add('border-indigo-600', 'text-indigo-600');
+            activeBtn.classList.remove('text-gray-500');
+        }
+
+        lucide.createIcons();
+    </script>
+}

@@ -1,5 +1,6 @@
 ﻿     namespace MaktabGram.Presentation.RazorPages.Extentions
 {
+    using Azure.Core;
     using Microsoft.AspNetCore.Http;
     using System.Text.Json;
 
@@ -10,6 +11,23 @@
         public CookieService(IHttpContextAccessor accessor)
         {
             _accessor = accessor ?? throw new ArgumentNullException(nameof(accessor));
+        }
+
+
+        public bool UserIsLoggedIn()
+        {
+            return Context.Request.Cookies.Any(x => x.Key == "Id");
+        }
+
+        public int GetUserId()
+        {
+            if (Context.Request.Cookies.TryGetValue("Id", out var userIdStr) &&
+                int.TryParse(userIdStr, out var userIdFromCookie))
+            {
+                return userIdFromCookie;
+            }
+
+            throw new Exception("User is not logged in.");
         }
 
         private HttpContext Context => _accessor.HttpContext

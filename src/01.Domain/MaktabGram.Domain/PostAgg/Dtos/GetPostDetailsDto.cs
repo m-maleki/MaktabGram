@@ -2,7 +2,7 @@
 
 namespace MaktabGram.Domain.Core.PostAgg.Dtos
 {
-    public class GetPostForFeedsDto
+    public class GetPostDetailsDto
     {
         public int Id { get; set; }
         public string Username { get; set; }

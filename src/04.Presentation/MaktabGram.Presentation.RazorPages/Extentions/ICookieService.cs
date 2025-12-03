@@ -10,5 +10,7 @@
 
         void Delete(string key);
         bool Exists(string key);
+        public int GetUserId();
+        public bool UserIsLoggedIn();
     }
 }

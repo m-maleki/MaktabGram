@@ -1,446 +1,158 @@
 ﻿@page
 @model MaktabGram.Presentation.RazorPages.Pages.Posts.CreateModel
-
 @{
-    Layout = "";
+    ViewData["Title"] = "پست جدید";
+    ViewData["PageTitle"] = "پست جدید";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+<main class="max-w-4xl mx-auto px-4 pt-6 pb-20">
+    <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+        <div class="bg-gradient-to-r from-indigo-500 to-purple-600 p-6 text-white">
+            <h1 class="text-2xl font-bold text-center">ایجاد پست جدید</h1>
+        </div>
 
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پست جدید | MaktabGram</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Vazirmatn Font (Persian) -->
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+        <form method="post" enctype="multipart/form-data" class="p-6 space-y-8">
+            <!-- ناحیه آپلود + پیش‌نمایش -->
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- سمت چپ: آپلود و پیش‌نمایش -->
+                <div class="space-y-6">
+                    <div id="uploadArea" class="border-4 border-dashed border-gray-300 rounded-2xl p-10 text-center cursor-pointer hover:border-indigo-400 transition"
+                         onclick="document.getElementById('fileInput').click()">
+                        <input type="file" id="fileInput" asp-for="Model.Img" accept="image/*" class="hidden" onchange="handleFileSelect(event)">
 
-    <style>
-        /* استایل‌های MaktabGram */
-        body {
-            font-family: 'Vazirmatn', sans-serif;
-            background-color: #EBEBEB;
-            color: #262626;
-        }
+                        <div id="uploadContent">
+                            <i data-lucide="image" class="w-16 h-16 text-gray-400 mx-auto mb-4"></i>
+                            <p class="text-lg font-medium text-gray-700">عکس را اینجا بکشید یا کلیک کنید</p>
+                            <p class="text-sm text-gray-500 mt-2">پشتیبانی از JPG, PNG, GIF</p>
+                        </div>
 
-        /* استایل اختصاصی ناحیه دراپ */
-        .drop-area {
-            border: 3px dashed #BDBDBD;
-            transition: all 0.2s ease-in-out;
-        }
+                        <!-- پیش‌نمایش تصویر -->
+                        <div id="imagePreview" class="hidden">
+                            <img id="previewImg" src="" alt="پیش‌نمایش" class="w-full rounded-xl shadow-lg">
+                            <button type="button" onclick="resetUpload()" class="mt-4 text-red-500 hover:text-red-700 text-sm">
+                                تغییر عکس
+                            </button>
+                        </div>
 
-            /* جلوه هاور و فعال شدن ناحیه دراپ */
-            .drop-area.hover {
-                border-color: #4F46E5;
-                background-color: #F3F4FF;
-            }
+                    </div>
 
-        /* دکمه اصلی ارسال */
-        .submit-btn {
-            background-color: #10B981;
-            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4);
-            transition: all 0.2s ease;
-        }
+                </div>
 
-            .submit-btn:hover {
-                background-color: #059669;
-                box-shadow: 0 6px 15px rgba(16, 185, 129, 0.5);
-                transform: translateY(-1px);
-            }
+                <!-- سمت راست: فرم -->
+                <div class="space-y-6">
+                    <!-- کپشن -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            کپشن (ایموجی هم می‌تونی بزنی)
+                        </label>
+                        <textarea asp-for="Model.Caption" rows="6"
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"
+                                  placeholder="امروز چه خبر؟"></textarea>
+                    </div>
 
-        }
+                    <!-- تگ‌ها -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">تگ‌ها (هشتگ)</label>
+                        <div class="flex flex-wrap gap-2 mb-3" id="tagsContainer"></div>
+                        <input type="text" asp-for="Model.Tags"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500"
+                               placeholder="مثال: سفر تهران خوشحالم"
+                               onkeydown="handleTagKeydown(event)">
+                    </div>
 
-        /* استایل کپسول تگ */
-        .tag-pill {
-            display: flex;
-            align-items: center;
-            background-color: #E0E7FF; /* آبی ملایم */
-            color: #4F46E5; /* بنفش/آبی پررنگ */
-            font-size: 0.875rem; /* text-sm */
-            padding: 0.25rem 0.5rem; /* py-1 px-2 */
-            border-radius: 9999px; /* rounded-full */
-            margin-left: 0.5rem; /* ml-2 */
-            margin-bottom: 0.5rem; /* mb-2 */
-            cursor: default;
-        }
+                    <!-- تنظیمات -->
+                    <div class="bg-gray-50 rounded-xl p-5 space-y-4">
+                        <label class="flex items-center justify-between cursor-pointer">
+                            <span class="text-sm font-medium text-gray-700">غیرفعال کردن کامنت‌ها</span>
+                            <input type="checkbox" name="DisableComments" class="w-5 h-5 text-indigo-600 rounded focus:ring-indigo-500">
+                        </label>
+                    </div>
 
-            .tag-pill button {
-                margin-right: 0.25rem; /* mr-1 */
-                line-height: 1;
-            }
+                    <!-- دکمه ارسال -->
+                    <div class="flex justify-end gap-4 pt-6 border-t border-gray-200">
+                      
+                        <button type="submit"
+                                class="px-10 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition flex items-center gap-2">
+                            ارسال پست
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
 
-        /* کلاس برای اطمینان از پوشش فضای باقی‌مانده‌ی صفحه بعد از هدر جهت مرکزیت عمودی */
-        .centered-content-area {
-            /* 100vh - ارتفاع هدر (h-14 = 3.5rem = 56px) */
-            min-height: calc(100vh - 3.5rem);
-        }
-    </style>
-</head>
-<body class="overflow-x-hidden">
+<!-- الرت سفارشی -->
+<div id="customAlert" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full shadow-2xl z-50">
+    <span id="alertMessage"></span>
+</div>
 
-    <!-- منطق جاوا اسکریپت برای مدیریت آپلود و دراپ فایل و تگ‌ها و رنگ‌ها -->
+@section Scripts {
     <script>
-        // متغیرهای DOM
-        let dropArea, fileInput, previewContainer, imagePreview, fileDetails, uploadContent, postForm;
-        let tagInput, tagsContainer, tagsArray = [];
-        // متغیرهای جدید برای مدیریت رنگ
-        let colorPreview, colorSwatches, selectedColor = null;
+        let selectedFile = null;
+        let selectedColor = null;
+        const tags = [];
 
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (!file) return;
 
-
-        window.onload = function() {
-            // انتصاب المان‌ها
-            dropArea = document.getElementById('dropArea');
-            fileInput = document.getElementById('fileInput');
-            previewContainer = document.getElementById('previewContainer');
-            imagePreview = document.getElementById('imagePreview');
-            colorPreview = document.getElementById('colorPreview');
-            fileDetails = document.getElementById('fileDetails');
-            uploadContent = document.getElementById('uploadContent');
-            postForm = document.getElementById('postForm');
-            tagInput = document.getElementById('tagInput');
-            tagsContainer = document.getElementById('tagsContainer');
-            colorSwatches = document.getElementById('colorSwatches');
-
-            // رویدادهای کلیک (انتخاب فایل معمولی)
-            dropArea.addEventListener('click', () => fileInput.click());
-            fileInput.addEventListener('change', handleFiles);
-
-            // رویدادهای Drag & Drop
-            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                dropArea.addEventListener(eventName, preventDefaults, false);
-            });
-            ['dragenter', 'dragover'].forEach(eventName => {
-                dropArea.addEventListener(eventName, highlight, false);
-            });
-            ['dragleave', 'drop'].forEach(eventName => {
-                dropArea.addEventListener(eventName, unhighlight, false);
-            });
-            dropArea.addEventListener('drop', handleDrop, false);
-
-            // رویدادهای تگ
-            tagInput.addEventListener('keydown', handleTagInput);
-
-            // تولید سواتچ‌های رنگی
-            predefinedColors.forEach(color => {
-                const swatch = document.createElement('div');
-                swatch.className = 'w-8 h-8 rounded-xl cursor-pointer shadow-md transition transform hover:scale-110 border-2 border-transparent';
-                swatch.style.backgroundColor = color;
-                swatch.setAttribute('data-color', color);
-                swatch.addEventListener('click', () => handleColorSelect(color));
-                colorSwatches.appendChild(swatch);
-            });
-
-            // فراخوانی آیکون‌ها
-            lucide.createIcons();
-        };
-
-        function preventDefaults(e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-
-        function highlight() {
-            dropArea.classList.add('hover');
-        }
-
-        function unhighlight() {
-            dropArea.classList.remove('hover');
-        }
-
-        function handleDrop(e) {
-            let dt = e.dataTransfer;
-            let files = dt.files;
-            handleFiles({ target: { files: files } });
-        }
-
-        function handleFiles(event) {
-            // ریست حالت رنگ
-            selectedColor = null;
-            updateSwatchSelection();
-
-            const files = event.target.files;
-            if (files.length === 0) return;
-
-            const file = files[0];
-
-            if (!file.type.startsWith('image/')) {
-                alertUser('لطفاً یک فایل تصویری (JPEG, PNG, GIF و غیره) انتخاب کنید.');
-                fileInput.value = '';
-                return;
-            }
-
+            selectedFile = file;
             const reader = new FileReader();
-            reader.onload = function(e) {
-                imagePreview.src = e.target.result;
-                fileDetails.textContent = `فایل انتخاب شد: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB - ${file.type.split('/')[1].toUpperCase()})`;
-
-                // نمایش پیش‌نمایش عکس، مخفی کردن رنگ
-                imagePreview.classList.remove('hidden');
-                colorPreview.classList.add('hidden');
-
-                uploadContent.classList.add('hidden');
-                previewContainer.classList.remove('hidden');
+            reader.onload = function(ev) {
+                document.getElementById('previewImg').src = ev.target.result;
+                document.getElementById('imagePreview').classList.remove('hidden');
+                document.getElementById('uploadContent').classList.add('hidden');
+                document.getElementById('colorPreview').classList.add('hidden');
+                selectedColor = null;
             };
             reader.readAsDataURL(file);
         }
 
-        function handleColorSelect(color) {
-            // ریست حالت فایل
-            fileInput.value = '';
-
+        function selectColor(color) {
             selectedColor = color;
-            updateSwatchSelection(color);
-
-            // نمایش پیش‌نمایش رنگ، مخفی کردن عکس
-            colorPreview.classList.remove('hidden');
-            imagePreview.classList.add('hidden');
-            fileDetails.textContent = `پس‌زمینه رنگی انتخاب شد: ${color}`;
-
-            uploadContent.classList.add('hidden');
-            previewContainer.classList.remove('hidden');
+            document.getElementById('colorPreview').style.backgroundColor = color;
+            document.getElementById('colorPreview').classList.remove('hidden');
+            document.getElementById('imagePreview').classList.add('hidden');
+            document.getElementById('uploadContent').classList.add('hidden');
+            document.getElementById('fileInput').value = '';
         }
-
-        function updateSwatchSelection(selected) {
-            // هایلایت کردن سواتچ انتخاب شده
-            document.querySelectorAll('#colorSwatches > div').forEach(swatch => {
-                if (swatch.getAttribute('data-color') === selected) {
-                    swatch.classList.add('border-indigo-800', 'border-4');
-                } else {
-                    swatch.classList.remove('border-indigo-800', 'border-4');
-                }
-            });
-        }
-
-        // --- توابع مدیریت تگ‌ها ---
-        function handleTagInput(e) {
-            if (e.key === 'Enter' || e.key === ' ' || e.key === 'Comma') {
-                e.preventDefault();
-                let tag = tagInput.value.trim().replace(/,/g, '');
-
-                if (tag.length > 0 && !tagsArray.includes(tag) && tagsArray.length < 10) {
-                    addTag(tag);
-                }
-                tagInput.value = '';
-            }
-        }
-
-        function addTag(tag) {
-            tagsArray.push(tag);
-
-            const tagPill = document.createElement('span');
-            tagPill.className = 'tag-pill';
-            tagPill.setAttribute('data-tag', tag);
-
-            const tagName = document.createTextNode(`#${tag}`);
-
-            const removeBtn = document.createElement('button');
-            removeBtn.innerHTML = '<span data-lucide="x" class="w-4 h-4 text-indigo-700"></span>';
-            removeBtn.addEventListener('click', () => removeTag(tag));
-
-            tagPill.appendChild(removeBtn);
-            tagPill.appendChild(tagName);
-
-            tagsContainer.prepend(tagPill);
-            lucide.createIcons();
-        }
-
-        function removeTag(tagToRemove) {
-            tagsArray = tagsArray.filter(tag => tag !== tagToRemove);
-
-            const pill = tagsContainer.querySelector(`[data-tag="${tagToRemove}"]`);
-            if (pill) {
-                pill.remove();
-            }
-        }
-        // --- پایان توابع مدیریت تگ‌ها ---
 
         function resetUpload() {
-            fileInput.value = '';
-            imagePreview.src = '';
-            fileDetails.textContent = '';
-
-            // ریست حالت مدیا
+            document.getElementById('fileInput').value = '';
+            document.getElementById('imagePreview').classList.add('hidden');
+            document.getElementById('colorPreview').classList.add('hidden');
+            document.getElementById('uploadContent').classList.remove('hidden');
+            selectedFile = null;
             selectedColor = null;
-            updateSwatchSelection();
-            imagePreview.classList.add('hidden');
-            colorPreview.classList.add('hidden');
-
-            uploadContent.classList.remove('hidden');
-            previewContainer.classList.add('hidden');
-
-            // ریست تگ‌ها
-            tagsArray = [];
-            tagsContainer.innerHTML = '';
-
-            postForm.reset();
         }
 
-        function submitPost(e) {
-             e.preventDefault();
-             const caption = document.getElementById('captionInput').value;
-
-             if (!caption) {
-                 alertUser('لطفاً کپشن را تکمیل کنید.');
-                 return;
-             }
-
-             // چک کردن انتخاب تصویر یا رنگ
-             if (fileInput.files.length === 0 && selectedColor === null) {
-                 alertUser('لطفاً یک تصویر یا یک رنگ پس‌زمینه انتخاب کنید.');
-                 return;
-             }
-
-             let mediaType = fileInput.files.length > 0 ? 'تصویر' : 'رنگ';
-             let mediaValue = fileInput.files.length > 0 ? fileInput.files[0].name : selectedColor;
-
-             alertUser(`پست با موفقیت ارسال شد!\nرسانه: ${mediaType} (${mediaValue})\nتگ‌ها: ${tagsArray.join(', ')}`);
-             resetUpload();
+        function handleTagKeydown(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                const value = e.target.value.trim();
+                if (value && !tags.includes(value) && tags.length < 10) {
+                    tags.push(value);
+                    addTagPill(value);
+                    e.target.value = '';
+                }
+            }
         }
 
-        function alertUser(message) {
-            const alertBox = document.getElementById('customAlert');
-            const alertText = document.getElementById('alertText');
 
-            alertText.textContent = message;
-            alertBox.classList.remove('hidden');
-
-            setTimeout(() => {
-                alertBox.classList.add('hidden');
-            }, 3000);
+        // نمایش پیام
+        function showAlert(message, isError = false) {
+            const alert = document.getElementById('customAlert');
+            const msg = document.getElementById('alertMessage');
+            msg.textContent = message;
+            alert.className = `fixed bottom-6 left-1/2 -translate-x-1/2 px-6 py-3 rounded-full shadow-2xl z-50 text-white ${isError ? 'bg-red-600' : 'bg-green-600'}`;
+            alert.classList.remove('hidden');
+            setTimeout(() => alert.classList.add('hidden'), 3000);
         }
 
+
+        lucide.createIcons();
     </script>
-
-    <!-- نوار ناوبری بالا (Header) - ثابت -->
-    <header class="fixed top-0 right-0 w-full bg-white border-b border-gray-100 z-50 shadow-lg">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
-            <a href="#" class="text-2xl font-bold tracking-tight text-gray-800">مکتب گرام</a>
-            <span class="text-lg font-semibold text-gray-700 hidden sm:block">پست جدید</span>
-            <nav class="flex space-x-6 space-x-reverse items-center">
-                <a href="#" class="text-gray-800 hover:text-gray-900" title="خانه"><span data-lucide="home" class="w-6 h-6"></span></a>
-                <a href="#" class="text-gray-800 hover:text-gray-900" title="پیام‌ها"><span data-lucide="send" class="w-6 h-6"></span></a>
-                <div class="w-7 h-7 rounded-full overflow-hidden border-2 border-gray-600">
-                    <!-- Placeholder برای آواتار -->
-                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI1MCIgZmlsbD0iIzNCODJGNlsiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI1MHB4IiBmaWxsPSIjRkZGRkZGIiBmb250LWZhbWlseT0iVmF6aXJtYXRuLCBzYW5zLXNlcmlmIj5QPC90ZXh0Pjwvc3ZnPg==" alt="عکس پروفایل" class="w-full h-full object-cover">
-                </div>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Custom Alert Box (به جای alert() مرورگر) -->
-    <div id="customAlert" class="hidden fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-xl shadow-2xl z-[100] transition duration-300 opacity-95">
-        <p id="alertText" class="text-sm"></p>
-    </div>
-
-    <!-- بسته‌بندی برای مرکز قرارگیری عمودی و افقی + جبران ارتفاع هدر (mt-14) -->
-    <div class="mt-14 w-full flex items-center justify-center centered-content-area">
-
-        <!-- محتوای اصلی آپلود پست -->
-        <main class="upload-layout p-4 sm:p-6 lg:p-8 w-full">
-
-            <!-- کارت اصلی آپلود با گردی زیاد (rounded-3xl) -->
-            <div class="post-card bg-white rounded-3xl shadow-lg p-4 sm:p-8">
-
-                <h2 class="text-2xl font-bold mb-6 text-gray-800">انتشار پست جدید</h2>
-
-                <form method="post" enctype="multipart/form-data">
-
-                    <!-- ناحیه آپلود عکس / پیش‌نمایش -->
-                    <div class="flex flex-col lg:flex-row gap-6 mb-8">
-
-                        <!-- ناحیه انتخاب فایل و رنگ -->
-                        <div id="uploadContent" class="w-full lg:w-1/2 flex flex-col gap-4">
-
-                            <!-- بخش آپلود تصویر -->
-                            <input type="file" id="fileInput" asp-for="Model.Img" accept="image/*" class="hidden">
-                            <div id="dropArea" class="drop-area h-full min-h-[180px] flex flex-col items-center justify-center text-center p-6 rounded-3xl cursor-pointer">
-                                <span data-lucide="image" class="w-10 h-10 text-gray-400 mb-2"></span>
-                                <p class="font-semibold text-gray-700 mb-1">برای آپلود، کلیک کنید یا عکس را رها کنید</p>
-                                <p class="text-xs text-gray-500">فقط فایل‌های تصویری</p>
-                            </div>
-
-                            <!-- بخش انتخاب رنگ -->
-
-                        </div>
-
-                        <!-- ناحیه پیش‌نمایش (مخفی تا انتخاب فایل/رنگ) -->
-                        <div id="previewContainer" class="w-full lg:w-1/2 aspect-square lg:aspect-auto h-full flex flex-col items-center justify-center hidden">
-                            <div id="mediaDisplay" class="w-full h-full rounded-2xl overflow-hidden relative shadow-lg flex items-center justify-center">
-                                <!-- پیش‌نمایش تصویر -->
-                                <img id="imagePreview" src="" alt="پیش‌نمایش پست" class="w-full h-full object-contain bg-gray-100 hidden">
-                                <!-- پیش‌نمایش رنگ -->
-                                <div id="colorPreview" class="w-full h-full text-white text-3xl font-bold flex items-center justify-center text-center p-4 hidden">
-                                    <!-- متنPlaceholder در اینجا قرار می‌گیرد -->
-                                </div>
-                            </div>
-                            <p id="fileDetails" class="text-xs text-gray-600 mt-2 text-center truncate w-full"></p>
-                            <button type="button" onclick="resetUpload()" class="text-red-500 text-sm mt-1 hover:text-red-700 transition">تغییر انتخاب</button>
-                        </div>
-
-                        <!-- ناحیه کپشن و تنظیمات -->
-                        <div class="w-full lg:w-1/2">
-                            <label for="captionInput" class="block text-sm font-medium mb-2 text-gray-700 flex items-center">
-                                <span data-lucide="smile" class="w-4 h-4 ml-1"></span>
-                                کپشن پست: (ایموجی پشتیبانی می‌شود)
-                            </label>
-                            <!-- افزایش ارتفاع به rows=6 -->
-                            <textarea asp-for="Model.Caption" rows="6" class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition resize-none" placeholder="اینجا متن جذاب خود را بنویسید (ایموجی 🚀 و هشتگ # را فراموش نکنید)..."></textarea>
-
-                            <!-- بخش اضافه کردن تگ -->
-                            <div class="mt-4">
-                                <label for="tagInput" class="block text-sm font-medium mb-2 text-gray-700">تگ‌ها (هشتگ):</label>
-                                <!-- نمایش تگ‌های اضافه شده -->
-
-                                <input type="text" asp-for="Model.Tags" class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" placeholder="مثال: آموزش، سفر، masoud_maleki">
-                            </div>
-
-                            <!-- تنظیمات کامنت -->
-                            <div class="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-200">
-                                <label class="flex items-center text-sm font-medium text-gray-700 cursor-pointer">
-                                    <input type="checkbox" asp-for="Model.ShowComment" class="h-4 w-4 text-indigo-600 border-gray-300 rounded ml-2">
-                                    غیر فعال کردن کامنت‌ها
-                                </label>
-                                <p class="text-xs text-gray-500 mt-1 mr-6">اگر نمی‌خواهید کسی بتواند برای این پست کامنت بگذارد، این گزینه را فعال کنید.</p>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- دکمه ارسال پست -->
-                    <div class="flex justify-end pt-4 border-t border-gray-100">
-                        <button type="submit" class="submit-btn text-white font-bold py-3 px-8 rounded-full transition">
-                            <span data-lucide="send" class="w-5 h-5 ml-2 inline-block -mt-0.5"></span>
-                            ارسال پست
-                        </button>
-                    </div>
-
-                    <div id="message-box" class="mt-4 text-center text-sm">
-                        <div style="color:red">@ViewBag.Error</div>
-                    </div>
-
-                </form>
-
-            </div>
-
-        </main>
-    </div>
-
-    <!-- فوتر ساده -->
-    <footer class="bg-gray-200 border-t border-gray-300 p-4 mt-8">
-        <div class="max-w-6xl mx-auto text-center text-sm text-gray-600">
-            <p>&copy; 2024 MaktabGram. کلیه حقوق محفوظ است.</p>
-            <div class="mt-1 space-x-4 space-x-reverse">
-                <a href="#" class="hover:text-gray-800 transition">تماس با ما</a>
-                <a href="#" class="hover:text-gray-800 transition">حریم خصوصی</a>
-                <a href="#" class="hover:text-gray-800 transition">شرایط استفاده</a>
-            </div>
-        </div>
-    </footer>
-
-</body>
-</html>
+}

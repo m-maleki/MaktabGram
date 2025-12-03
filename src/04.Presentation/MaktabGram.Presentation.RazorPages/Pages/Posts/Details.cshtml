@@ -1,0 +1,109 @@
+﻿@page
+@model MaktabGram.Presentation.RazorPages.Pages.Posts.DetailsModel
+
+@{
+    ViewData["Title"] = "جزئیات پست";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<!-- محتوای اصلی فید -->
+<main class="max-w-lg mx-auto px-4 pt-6 pb-24">
+
+    <article class="post-card bg-white rounded-2xl mb-8 overflow-hidden shadow-lg">
+        <!-- هدر پست -->
+        <div class="flex items-center justify-between p-4">
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-full overflow-hidden border-2 border-gray-300">
+                    @if (!string.IsNullOrEmpty(Model.Post.ProfileImgUrl))
+                    {
+                        <img src="/@Model.Post.ProfileImgUrl" alt="@Model.Post.Username" class="w-full h-full object-cover">
+                    }
+                    else
+                    {
+                        <div class="w-full h-full bg-blue-500 flex items-center justify-center text-white font-bold text-lg">
+                            @Model.Post.Username.Substring(0, 1).ToUpper()
+                        </div>
+                    }
+                </div>
+            </div>
+            <button type="button">
+                <i data-lucide="more-horizontal" class="w-6 h-6 text-gray-600"></i>
+            </button>
+        </div>
+
+        <!-- تصویر پست + انیمیشن لایک دوبل‌کلیک -->
+        <div class="relative bg-black">
+            <div class="post-media-area aspect-square cursor-pointer">
+                <img src="/@Model.Post.ImgPostUrl" alt="پست @Model.Post.Username" class="w-full h-full object-cover">
+                <!-- قلب بزرگ انیمیشنی -->
+                <div class="like-overlay pointer-events-none z-10">
+                    <i data-lucide="heart" class="w-24 h-24 text-white fill-white drop-shadow-2xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- اکشن‌ها و اطلاعات -->
+        <div class="p-4">
+            <!-- دکمه‌های لایک، کامنت، ارسال، بوکمارک -->
+            <div class="flex justify-between items-center mb-3">
+                <div class="flex items-center gap-5">
+
+                    <button type="button" class="action-btn">
+                        <i data-lucide="message-circle" class="w-7 h-7 text-gray-800"></i>
+                    </button>
+                    <button type="button" class="action-btn">
+                        <i data-lucide="send" class="w-7 h-7 text-gray-800"></i>
+                    </button>
+                </div>
+                <button type="button" class="action-btn">
+                    <i data-lucide="bookmark" class="w-7 h-7 text-gray-800"></i>
+                </button>
+            </div>
+
+            <!-- تعداد لایک -->
+            <p class="font-bold text-sm mb-2">
+                @Model.Post.LikeCount.ToString("N0") نفر این را لایک کرده‌اند
+            </p>
+
+            <!-- کپشن -->
+            <p class="text-sm leading-relaxed mb-3">
+                <span class="font-bold mr-1">@Model.Post.Username</span>
+                @Model.Post.Caption
+            </p>
+
+            <!-- کامنت‌ها -->
+            @if (Model.Post.Comments?.Any() == true)
+            {
+                <p class="text-xs text-gray-500 mb-2 cursor-pointer hover:text-gray-700">
+                    مشاهده همه @Model.Post.Comments.Count کامنت
+                </p>
+
+                @foreach (var comment in Model.Post.Comments.Take(2))
+                {
+                    <div class="flex justify-between items-start group mb-3 last:mb-0">
+                        <div class="flex-1">
+                            <span class="font-bold text-sm mr-1">@comment.User.Username</span>
+                            <span class="text-sm text-gray-700">@comment.Text</span>
+                        </div>
+                        @if (comment.CommentLikes is not null)
+                        {
+                            <button type="button" class="comment-like-btn opacity-0 group-hover:opacity-100 transition p-1">
+                                <i data-lucide="heart"
+                                   class="comment-heart-icon w-4 h-4 @(comment.CommentLikes.Count > 0 ? "fill-red-500 text-red-500" : "text-gray-400")">
+                                </i>
+                                <span class="comment-like-count text-xs text-gray-500 mr-1">@comment.CommentLikes.Count</span>
+                            </button>
+                        }
+                    </div>
+                }
+            }
+
+            <!-- تاریخ -->
+            <p class="text-xs text-gray-400 mt-4">
+                @Model.Post.CreateAt <!-- یا هر متدی که داری -->
+            </p>
+        </div>
+    </article>
+
+</main>
+
