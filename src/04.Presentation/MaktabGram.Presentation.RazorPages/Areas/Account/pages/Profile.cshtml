@@ -1,8 +1,7 @@
 ﻿@page
 @model MaktabGram.Presentation.RazorPages.Pages.Account.ProfileModel
 @{
-    ViewData["Title"] = $"{Model.Profile.UserName} | مکتب‌گرام";
-    Layout = "~/Pages/Shared/_Layout.cshtml";
+
 }
 
 <main class="max-w-4xl mx-auto px-4 pt-6 pb-20 md:pb-8">
@@ -25,7 +24,7 @@
                 </div>
             </div>
 
-                  <!-- اطلاعات و آمار -->
+            <!-- اطلاعات و آمار -->
             <div class="flex-1 text-center md:text-right">
                 <h1 class="text-2xl font-bold mb-4">@Model.Profile.UserName</h1>
 
@@ -95,16 +94,14 @@
                 <i data-lucide="grid-3x3" class="w-5 h-5"></i>
                 <span class="hidden sm:inline">پست‌ها</span>
             </button>
-            <button onclick="openTab('saved')" id="tab-saved"
-                    class="tab-btn flex-1 py-4 text-gray-500 hover:text-gray-800 transition flex items-center justify-center gap-2">
-                <i data-lucide="bookmark" class="w-5 h-5"></i>
-                <span class="hidden sm:inline">ذخیره‌شده</span>
-            </button>
+
+
             <button onclick="openTab('tagged')" id="tab-tagged"
                     class="tab-btn flex-1 py-4 text-gray-500 hover:text-gray-800 transition flex items-center justify-center gap-2">
                 <i data-lucide="tag" class="w-5 h-5"></i>
                 <span class="hidden sm:inline">تگ‌شده</span>
             </button>
+
         </div>
     </div>
 
@@ -121,8 +118,8 @@
                         {
                             <a asp-page="/Posts/Details" asp-route-id="@post.PostId" class="aspect-square relative group overflow-hidden rounded-lg">
 
-                                    <img src="/@post.ImgPostUrl" alt="پست" class="w-full h-full object-cover transition-transform group-hover:scale-110 duration-300">
-                                
+                                <img src="/@post.ImgPostUrl" alt="پست" class="w-full h-full object-cover transition-transform group-hover:scale-110 duration-300">
+
                                 <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
                                     <div class Uly-white flex gap-6 text-lg font-bold">
                                         <span class="flex items-center gap-2">

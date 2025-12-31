@@ -2,11 +2,13 @@ using MaktabGram.Domain.ApplicationServices.PostAgg;
 using MaktabGram.Domain.Core.PostAgg.Contracts;
 using MaktabGram.Domain.Core.PostAgg.Dtos;
 using MaktabGram.Presentation.RazorPages.Extentions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace MaktabGram.Presentation.RazorPages.Pages.Posts
 {
+    [Authorize]
     public class CreateModel(IPostApplicationService postApplicationService) : BasePageModel
     {
         [BindProperty]

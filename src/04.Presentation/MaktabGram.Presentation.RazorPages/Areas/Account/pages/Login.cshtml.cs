@@ -20,6 +20,7 @@ namespace MaktabGram.Presentation.RazorPages.Pages.Account
 
         public IActionResult OnGet()
         {
+
             if (UserIsLoggedIn())
             {
                 return RedirectToPage("/Account/Profile");
@@ -28,13 +29,13 @@ namespace MaktabGram.Presentation.RazorPages.Pages.Account
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(CancellationToken cancellationToken)
+        public async Task<IActionResult> OnPostAsync(int id ,string returnUrl = null)
         {
-            var loginResult = await userApplicationService.Login(Model.Mobile, Model.Password, cancellationToken);
+            var loginResult = await userApplicationService.Login(Model.Mobile, Model.Password, default);
 
             if (loginResult.IsSuccess)
             {
-                return RedirectToPage("/Account/Profile");
+                return RedirectToPage(returnUrl);
             }
             else
             {
