@@ -160,8 +160,8 @@ namespace MaktabGram.Domain.ApplicationServices.UserAgg
 
         public async Task SendRegisterOtp(string mobile, CancellationToken cancellationToken)
         {
-            var otp = await smsService.SendOTP(mobile);
-            await otpService.Create(mobile, otp,Core.UserAgg.Enum.OtpTypeEnum.Register,cancellationToken);
+            //var otp = await smsService.SendOTP(mobile);
+            //await otpService.Create(mobile, otp,Core.UserAgg.Enum.OtpTypeEnum.Register,cancellationToken);
         }
     }
 }

@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.21">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.0" />
+
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+		<PackageReference Include="Hangfire.Core" Version="1.8.*" />
+		<PackageReference Include="Hangfire.SqlServer" Version="1.8.*" />
+		<PackageReference Include="Hangfire.AspNetCore" Version="1.8.*" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="*" />
+		<PackageReference Include="Serilog" Version="4.3.0" />
+		<PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
+		<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="9.0.2" />
+		<PackageReference Include="Serilog.Sinks.Seq" Version="9.0.0" />
+
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\01.Domain\Services\ApplicationServices\MaktabGram.Domain.ApplicationServices\MaktabGram.Domain.ApplicationServices.csproj" />
+		<ProjectReference Include="..\..\02.Services\MaktabGram.Services\MaktabGram.Domain.Services.csproj" />
+		<ProjectReference Include="..\..\03.Infrastructure\MaktabGram.Infrastructure.EfCore\MaktabGram.Infrastructure.EfCore.csproj" />
+		<ProjectReference Include="..\..\03.Infrastructure\MaktabGram.Infrastructure.Notifications\MaktabGram.Infrastructure.Notifications.csproj" />
+	</ItemGroup>
+
+</Project>
