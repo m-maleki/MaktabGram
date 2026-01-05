@@ -12,10 +12,25 @@ namespace MaktabGram.Presentation.RazorPages.Pages.User
         public void OnGet()
         {
         }
-        public IActionResult OnPost(CancellationToken cancellationToken)
+        public async Task<IActionResult> OnPost(CancellationToken cancellationToken)
         {
-            userApplicationService.Register(model, cancellationToken);
-            return RedirectToPage("Index");
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            var result = await userApplicationService.Register(model, cancellationToken);
+            
+            if (result.IsSuccess)
+            {
+                TempData["SuccessMessage"] = "کاربر با موفقیت ایجاد شد";
+                return RedirectToPage("Index");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, result.Message);
+                return Page();
+            }
         }
     }
 }

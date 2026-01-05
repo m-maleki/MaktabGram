@@ -1,116 +1,139 @@
 ﻿@page
 @model MaktabGram.Presentation.RazorPages.Pages.Account.RegisterModel
 @{
+    ViewData["Title"] = "ثبت نام";
+    Layout = "~/Areas/Account/Shared/_Layout.cshtml";
 }
 
-<div class="w-full max-w-md bg-white rounded-2xl p-8 shadow-3xl lg:p-12 transition-all duration-500 border border-gray-100">
-
+<div class="auth-card">
     <header class="text-center mb-8">
-        <h1 class="text-4xl font-black text-gray-800 tracking-tight mb-2 app-logo">
+        <h1 class="text-4xl font-black app-logo tracking-tight mb-2">
             مکتب گرام
         </h1>
         <p class="text-gray-500 text-sm">همین حالا به ما بپیوندید!</p>
     </header>
 
     <form method="post" class="space-y-5">
+        @if (!ViewData.ModelState.IsValid && ViewData.ModelState.ErrorCount > 0)
+        {
+            <div asp-validation-summary="All" class="alert alert-danger mb-4"></div>
+        }
+        
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success mb-4">
+                @TempData["SuccessMessage"]
+            </div>
+        }
 
-        <div>
-            <label for="FirstName" class="block text-sm font-medium text-gray-700 mb-1">نام و نام خانوادگی:</label>
+        <div class="form-group">
+            <label for="FirstName" class="form-label">نام</label>
             <input type="text"
                    id="FirstName"
                    asp-for="Model.FirstName"
                    placeholder="مثال: مسعود"
-                   class="w-full p-3 border border-gray-300 rounded-lg text-right focus:ring-2 focus:ring-purple-400 focus:border-purple-500 transition duration-150"
+                   class="form-input"
                    required>
         </div>
 
-        <div>
-            <label for="LastName" class="block text-sm font-medium text-gray-700 mb-1">نام و نام خانوادگی:</label>
+        <div class="form-group">
+            <label for="LastName" class="form-label">نام خانوادگی</label>
             <input type="text"
                    id="LastName"
                    asp-for="Model.LastName"
-                   placeholder="مثال:مالکی"
-                   class="w-full p-3 border border-gray-300 rounded-lg text-right focus:ring-2 focus:ring-purple-400 focus:border-purple-500 transition duration-150"
+                   placeholder="مثال: ملکی"
+                   class="form-input"
                    required>
         </div>
 
-        <div>
-            <label for="mobileNumber" class="block text-sm font-medium text-gray-700 mb-1">شماره موبایل:</label>
+        <div class="form-group">
+            <label for="mobileNumber" class="form-label">شماره موبایل</label>
             <input type="tel"
                    asp-for="Model.Mobile"
                    id="mobileNumber"
                    placeholder="مثال: 09121234567"
-                   class="w-full p-3 border border-gray-300 rounded-lg text-right focus:ring-2 focus:ring-purple-400 focus:border-purple-500 transition duration-150"
+                   class="form-input"
                    required>
         </div>
 
-        <div>
-            <label for="username" class="block text-sm font-medium text-gray-700 mb-1">نام کاربری (اختیاری):</label>
+        <div class="form-group">
+            <label for="username" class="form-label">نام کاربری (اختیاری)</label>
             <input type="text"
                    id="username"
                    asp-for="Model.Username"
                    placeholder="مثال: masoud_maleki"
-                   class="w-full p-3 border border-gray-300 rounded-lg text-right focus:ring-2 focus:ring-purple-400 focus:border-purple-500 transition duration-150">
+                   class="form-input">
         </div>
 
-        <div>
-            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">رمز عبور:</label>
+        <div class="form-group">
+            <label for="password" class="form-label">رمز عبور</label>
             <input type="password"
                    id="password"
                    asp-for="Model.Password"
                    placeholder="حداقل ۶ کاراکتر"
-                   class="w-full p-3 border border-gray-300 rounded-lg text-right focus:ring-2 focus:ring-purple-400 focus:border-purple-500 transition duration-150"
+                   class="form-input"
                    required>
         </div>
 
-        <div>
-            <label for="otp" class="block text-sm font-medium text-gray-700 mb-1">کد یکبار مصرف:</label>
+        <div class="form-group">
+            <label for="otp" class="form-label">کد یکبار مصرف</label>
             <input type="number"
                    asp-for="Model.Otp"
-                   placeholder="حداقل 5 کاراکتر"
-                   class="w-full p-3 border border-gray-300 rounded-lg text-right focus:ring-2 focus:ring-purple-400 focus:border-purple-500 transition duration-150"
+                   id="otp"
+                   placeholder="کد ۵ رقمی"
+                   class="form-input"
                    required>
         </div>
 
         <a id="sendOtpLink"
            data-handler="SendOtp"
-           class="signup-button w-full text-white font-bold py-3 px-4 rounded-xl text-lg tracking-wide shadow-lg mt-4 text-center block cursor-pointer">
+           class="signup-button w-full text-white font-bold py-3 px-4 rounded-xl text-lg tracking-wide shadow-lg text-center block cursor-pointer">
             ارسال کد یکبار مصرف
         </a>
 
         <button type="submit"
-                class="signup-button w-full text-white font-bold py-3 px-4 rounded-xl text-lg tracking-wide shadow-lg mt-4">
+                class="signup-button w-full text-white font-bold py-3 px-4 rounded-xl text-lg tracking-wide shadow-lg">
             ثبت نام
         </button>
     </form>
 
-    <div id="message-box" class="mt-4 text-center text-sm">
-        <div style="color:red">@ViewBag.Error</div>
-    </div>
-
     <div class="mt-8 text-center text-sm">
         <p class="text-gray-600">
             قبلاً حساب کاربری دارید؟
-            <a class="text-purple-600 hover:text-purple-700 font-bold transition duration-150 mr-1" asp-area="" asp-controller="Account" asp-action="Login">وارد شوید</a>
-
+            <a asp-area="Account" asp-page="/Login" class="text-purple-600 hover:text-purple-700 font-bold transition duration-150 mr-1">
+                وارد شوید
+            </a>
         </p>
     </div>
-
 </div>
 
 @section Scripts {
     <script>
-        document.getElementById('sendOtpLink').addEventListener('click', function (e) {
+        document.getElementById('sendOtpLink').addEventListener('click', async function (e) {
             e.preventDefault();
-
-            const mobileInput = document.getElementById('mobileNumber');
-            const mobile = mobileInput.value.trim();
-
-            const url = `/Account/Register?handler=SendOtp&mobile=${encodeURIComponent(mobile)}`;
-
-            alert(url);
-
-            window.location.href = url;
+            const mobile = document.getElementById('mobileNumber').value;
+            
+            if (!mobile || !MaktabGram.validateIranianMobile(mobile)) {
+                MaktabGram.showAlert('لطفاً شماره موبایل معتبر وارد کنید', 'error');
+                return;
+            }
+            
+            MaktabGram.showLoading(this);
+            
+            try {
+                const response = await fetch(`?handler=SendOtp&mobile=${mobile}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    MaktabGram.showAlert('کد تأیید با موفقیت ارسال شد', 'success');
+                } else {
+                    MaktabGram.showAlert(result.message || 'خطا در ارسال کد', 'error');
+                }
+            } catch (error) {
+                MaktabGram.showAlert('خطا در ارتباط با سرور', 'error');
+            } finally {
+                MaktabGram.hideLoading(this);
+            }
         });
     </script>
 }

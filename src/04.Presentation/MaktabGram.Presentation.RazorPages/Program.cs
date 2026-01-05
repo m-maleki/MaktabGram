@@ -145,7 +145,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.MapGet("/", () => Results.Redirect("/Account/Register"));
+app.MapGet("/", () => Results.Redirect("/Account/Login"));
 
 
 app.UseHttpsRedirection();

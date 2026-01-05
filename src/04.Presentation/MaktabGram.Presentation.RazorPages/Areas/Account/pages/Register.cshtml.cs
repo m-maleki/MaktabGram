@@ -33,6 +33,11 @@ namespace MaktabGram.Presentation.RazorPages.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(CancellationToken cancellationToken)
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
             var userModel = new RegisterUserInputDto
             {
                 FirstName = Model.FirstName,
@@ -47,15 +52,14 @@ namespace MaktabGram.Presentation.RazorPages.Pages.Account
 
             BackgroundJob.Enqueue<IMyServices>(x => x.Log());
 
-
-
             if (registerResult.IsSuccess)
             {
+                TempData["SuccessMessage"] = "ثبت نام با موفقیت انجام شد. لطفاً وارد شوید";
                 return RedirectToPage("/Account/Login");
             }
             else
             {
-                Message = registerResult.Message;
+                ModelState.AddModelError(string.Empty, registerResult.Message);
             }
 
             return Page();
@@ -63,8 +67,15 @@ namespace MaktabGram.Presentation.RazorPages.Pages.Account
 
         public async Task<IActionResult> OnGetSendOtp(string mobile,CancellationToken cancellationToken)
         { 
-           await userApplicationService.SendRegisterOtp(mobile, cancellationToken);
-            return Page();
+            try
+            {
+                await userApplicationService.SendRegisterOtp(mobile, cancellationToken);
+                return new JsonResult(new { success = true, message = "کد تأیید ارسال شد" });
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { success = false, message = ex.Message });
+            }
         }
     }
 

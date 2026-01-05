@@ -3,43 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ثبت نام در مکتب گرام</title>
+    <title>@ViewData["Title"] - مکتب گرام</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700&display=swap" rel="stylesheet">
-
+    
+    <!-- Vazirmatn Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Site RTL Styles -->
+    <link rel="stylesheet" href="~/css/site-rtl.css" asp-append-version="true" />
+    
     <style>
+        /* استایل‌های اختصاصی صفحات احراز هویت */
         body {
-            font-family: 'Vazirmatn', sans-serif;
-            color: #262626;
             background: linear-gradient(180deg, #F0F0F5 0%, #EBEBEB 100%);
             background-attachment: fixed;
         }
-
-        .signup-button {
-            background-image: linear-gradient(to right, #6B46C1 0%, #F687B3 50%, #FBBF24 100%);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(107, 70, 193, 0.4);
+        
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
         }
-
-            .signup-button:hover {
-                opacity: 0.9;
-                transform: translateY(-1px);
-                box-shadow: 0 6px 20px rgba(107, 70, 193, 0.6);
-            }
-
-        .app-logo {
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .shadow-3xl {
+        
+        .auth-card {
+            width: 100%;
+            max-width: 28rem;
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.5s ease;
         }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
-    @RenderBody()
-</body>
-
+<body>
+    <div class="auth-container">
+        @RenderBody()
+    </div>
+    
+    <!-- Scripts -->
+    <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-
+</body>
 </html>

@@ -23,7 +23,12 @@ namespace MaktabGram.Presentation.RazorPages.Pages.Account
 
             if (UserIsLoggedIn())
             {
-                return RedirectToPage("/Account/Profile");
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToPage("/Index", new { area = "Admin" });
+                }
+
+                return RedirectToPage("/Profile", new { area = "Account" });
             }
 
             return Page();
@@ -31,15 +36,28 @@ namespace MaktabGram.Presentation.RazorPages.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(int id ,string returnUrl = null)
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
             var loginResult = await userApplicationService.Login(Model.Mobile, Model.Password, default);
 
             if (loginResult.IsSuccess)
             {
-                return RedirectToPage(returnUrl);
+                TempData["SuccessMessage"] = "ورود با موفقیت انجام شد";
+                
+                // اگر کاربر ادمین باشه به پنل ادمین برود
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToPage("/Index", new { area = "Admin" });
+                }
+
+                return RedirectToPage(returnUrl ?? "/Profile", new { area = "Account" });
             }
             else
             {
-                Message = loginResult.Message;
+                ModelState.AddModelError(string.Empty, loginResult.Message);
             }
 
             return Page();

@@ -116,6 +116,7 @@ namespace MaktabGram.Domain.ApplicationServices.UserAgg
                 UserName = model.Mobile,
                 PhoneNumber = model.Mobile,
                 Email = model.Email,
+                
             };
 
             var result = await userManager.CreateAsync(user, model.Password);

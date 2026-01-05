@@ -13,6 +13,18 @@
         </div>
 
         <form method="post" enctype="multipart/form-data" class="p-6 space-y-8">
+            @if (!ViewData.ModelState.IsValid && ViewData.ModelState.ErrorCount > 0)
+            {
+                <div asp-validation-summary="All" class="alert alert-danger"></div>
+            }
+            
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+
             <!-- ناحیه آپلود + پیش‌نمایش -->
             <div class="grid lg:grid-cols-2 gap-8">
                 <!-- سمت چپ: آپلود و پیش‌نمایش -->

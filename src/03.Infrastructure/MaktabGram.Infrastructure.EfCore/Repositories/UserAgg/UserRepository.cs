@@ -169,7 +169,7 @@ namespace MaktabGram.Infrastructure.EfCore.Repositories.UserAgg
         public async Task<GetUserProfileDto> GetProfile(int searchedUserId, CancellationToken cancellationToken)
         {
             return await dbContext.Users
-                .Where(u => u.Id == searchedUserId)
+                .Where(u => u.IdentityUserId == searchedUserId)
                 .Select(u => new GetUserProfileDto
                 {
                     Id = u.Id,
@@ -184,7 +184,7 @@ namespace MaktabGram.Infrastructure.EfCore.Repositories.UserAgg
 
         public async Task<GetUserProfileDto> GetProfileWithPosts(int searchedUserId, int curentUserId, CancellationToken cancellationToken)
         {
-            return await dbContext.Users
+            return await dbContext.Users.Include(x=>x.Profile)
                 .Where(u => u.Id == searchedUserId)
                 .Select(u => new GetUserProfileDto
                 {

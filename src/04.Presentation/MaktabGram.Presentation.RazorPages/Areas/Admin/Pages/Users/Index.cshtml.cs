@@ -17,18 +17,17 @@ namespace MaktabGram.Presentation.RazorPages.Pages.User
         }
 
 
-        public IActionResult OnGetActive(int id,CancellationToken cancellationToken)
+        public async Task<IActionResult> OnGetActive(int userId,CancellationToken cancellationToken)
         {
-            userApplicationService.Active(id, cancellationToken);
-
+            await userApplicationService.Active(userId, cancellationToken);
+            TempData["SuccessMessage"] = "کاربر با موفقیت فعال شد";
             return RedirectToPage("Index");
         }
 
-
-        public IActionResult OnGetDeActive(int id,CancellationToken cancellationToken)
+        public async Task<IActionResult> OnGetDeActive(int userId,CancellationToken cancellationToken)
         {
-            userApplicationService.DeActive(id, cancellationToken);
-
+            await userApplicationService.DeActive(userId, cancellationToken);
+            TempData["SuccessMessage"] = "کاربر با موفقیت غیرفعال شد";
             return RedirectToPage("Index");
         }
     }

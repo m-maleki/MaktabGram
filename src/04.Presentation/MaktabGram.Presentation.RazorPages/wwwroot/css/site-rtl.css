@@ -1,0 +1,359 @@
+/* استایل‌های مشترک فارسی برای مکتب‌گرام */
+
+/* فونت‌های فارسی */
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+    /* رنگ‌های اصلی مکتب‌گرام */
+    --primary-gradient: linear-gradient(to right, #6B46C1 0%, #F687B3 50%, #FBBF24 100%);
+    --primary-purple: #6B46C1;
+    --primary-pink: #F687B3;
+    --primary-yellow: #FBBF24;
+    
+    /* رنگ‌های پس‌زمینه */
+    --bg-light: #EBEBEB;
+    --bg-gradient: linear-gradient(180deg, #F0F0F5 0%, #EBEBEB 100%);
+    
+    /* رنگ‌های متن */
+    --text-primary: #262626;
+    --text-secondary: #737373;
+    --text-light: #A3A3A3;
+    
+    /* سایه‌ها */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+    --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+}
+
+body {
+    font-family: 'Vazirmatn', sans-serif;
+    direction: rtl;
+    text-align: right;
+    color: var(--text-primary);
+    background-color: var(--bg-light);
+}
+
+/* دکمه‌های اصلی با گرادینت مکتب‌گرام */
+.btn-primary,
+.signup-button,
+.login-button {
+    background-image: var(--primary-gradient);
+    color: white;
+    font-weight: 700;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(107, 70, 193, 0.4);
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover,
+.signup-button:hover,
+.login-button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(107, 70, 193, 0.6);
+    color: white;
+}
+
+/* کارت‌های مدرن */
+.card,
+.post-card {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.card:hover,
+.post-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+/* سایه برجسته برای کارت‌های مهم */
+.shadow-3xl {
+    box-shadow: var(--shadow-2xl);
+}
+
+/* لوگوی اپلیکیشن */
+.app-logo {
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* اینپوت‌های فارسی */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+textarea,
+select {
+    direction: rtl;
+    text-align: right;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    ring: 2px;
+    ring-color: var(--primary-purple);
+}
+
+/* دکمه‌های اکشن */
+.action-btn {
+    transition: all 0.15s ease;
+    cursor: pointer;
+}
+
+.action-btn:hover {
+    transform: translateY(-1px);
+}
+
+/* گرادینت استوری‌ها */
+.story-border {
+    padding: 3px;
+    background: linear-gradient(45deg, #6B46C1, #F687B3, #FBBF24);
+    border-radius: 50%;
+    cursor: pointer;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+/* مخفی کردن اسکرول‌بار */
+.hide-scrollbar,
+.story-reel {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar,
+.story-reel::-webkit-scrollbar {
+    display: none;
+}
+
+/* انیمیشن قلب لایک */
+.like-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.like-overlay.show {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* تیبل‌های راست‌چین */
+table {
+    direction: rtl;
+    text-align: right;
+}
+
+th, td {
+    text-align: right;
+}
+
+/* Badge و Label های فارسی */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-success {
+    background-color: #DCFCE7;
+    color: #15803D;
+}
+
+.badge-danger {
+    background-color: #FEE2E2;
+    color: #B91C1C;
+}
+
+.badge-warning {
+    background-color: #FEF3C7;
+    color: #A16207;
+}
+
+.badge-info {
+    background-color: #DBEAFE;
+    color: #1E40AF;
+}
+
+/* الرت‌های سفارشی */
+.alert {
+    padding: 1rem;
+    border-radius: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+}
+
+.alert-success {
+    background-color: #DCFCE7;
+    color: #15803D;
+    border-color: #BBF7D0;
+}
+
+.alert-danger {
+    background-color: #FEE2E2;
+    color: #B91C1C;
+    border-color: #FECACA;
+}
+
+.alert-warning {
+    background-color: #FEF3C7;
+    color: #A16207;
+    border-color: #FDE68A;
+}
+
+.alert-info {
+    background-color: #DBEAFE;
+    color: #1E40AF;
+    border-color: #BFDBFE;
+}
+
+/* انیمیشن‌های ظریف */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* فرم‌های فارسی */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    color: var(--text-primary);
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #D1D5DB;
+    border-radius: 0.5rem;
+    direction: rtl;
+    text-align: right;
+    transition: all 0.15s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary-purple);
+    ring: 2px;
+    ring-color: rgba(107, 70, 193, 0.2);
+}
+
+/* ناوبری راست‌چین */
+.navbar,
+.sidebar {
+    direction: rtl;
+    text-align: right;
+}
+
+/* منوی کشویی */
+.dropdown-menu {
+    direction: rtl;
+    text-align: right;
+    right: 0;
+    left: auto;
+}
+
+/* پاگیناسیون */
+.pagination {
+    display: flex;
+    gap: 0.5rem;
+    direction: rtl;
+}
+
+/* اسپینر لودینگ */
+.spinner {
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-right-color: var(--primary-purple);
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+    
+    h1 {
+        font-size: 1.75rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    h3 {
+        font-size: 1.25rem;
+    }
+}
+
+/* برطرف کردن مشکلات Bootstrap با RTL */
+.mr-auto {
+    margin-left: auto !important;
+    margin-right: 0 !important;
+}
+
+.ml-auto {
+    margin-right: auto !important;
+    margin-left: 0 !important;
+}
+
+.text-right {
+    text-align: right !important;
+}
+
+.text-left {
+    text-align: left !important;
+}
+
+/* دکمه بستن برای مودال‌ها */
+.btn-close {
+    margin-left: 0;
+    margin-right: auto;
+}

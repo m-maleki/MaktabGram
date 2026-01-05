@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فرم‌ها - پنل مدیریت</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <div class="flex h-screen bg-gray-100">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar fixed z-30 right-0 top-0 h-full w-64 bg-gray-800 text-white p-6 md:translate-x-0 transform transition-transform duration-300 shadow-xl">
+            <div class="flex items-center justify-between">
+                <h1 class="text-2xl font-bold mb-8 text-indigo-400">پنل مدیریت</h1>
+                <button id="close-sidebar" class="md:hidden text-2xl p-2 focus:outline-none">&times;</button>
+            </div>
+            
+            <nav class="space-y-2">
+                <a href="dashboard.html" class="flex items-center p-3 rounded-lg hover:bg-gray-700 transition duration-150">
+                    <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    <span>داشبورد اصلی</span>
+                </a>
+                <a href="charts.html" class="flex items-center p-3 rounded-lg hover:bg-gray-700 transition duration-150">
+                    <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path></svg>
+                    <span>گزارشات و نمودارها</span>
+                </a>
+                <a href="forms.html" class="flex items-center p-3 rounded-lg bg-indigo-700 hover:bg-indigo-600 transition duration-150">
+                    <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <span>ورودی و فرم‌ها</span>
+                </a>
+                <a href="tables.html" class="flex items-center p-3 rounded-lg hover:bg-gray-700 transition duration-150">
+                    <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+                    <span>مدیریت داده‌ها (جدول)</span>
+                </a>
+                <a href="components.html" class="flex items-center p-3 rounded-lg hover:bg-gray-700 transition duration-150">
+                    <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
+                    <span>قطعات UI</span>
+                </a>
+                <a href="settings.html" class="flex items-center p-3 rounded-lg hover:bg-gray-700 transition duration-150">
+                    <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37a1.724 1.724 0 002.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <span>تنظیمات</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-x-hidden overflow-y-auto md:mr-64 p-6 transition-all duration-300">
+            <div class="md:hidden flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-semibold text-gray-700">فرم‌ها</h2>
+                <button id="open-sidebar" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+
+            <h1 class="text-3xl font-bold text-gray-800 mb-8 hidden md:block">فرم ثبت یا ویرایش اطلاعات</h1>
+
+            <section class="mb-8">
+                <div class="card p-6">
+                    <form onsubmit="event.preventDefault(); alert('فرم با موفقیت ارسال شد!');">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                            <div>
+                                <label for="first_name" class="block text-sm font-medium text-gray-700 mb-1">نام</label>
+                                <input type="text" id="first_name" name="first_name" placeholder="نام خود را وارد کنید"
+                                       class="mt-1 p-3 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+                            </div>
+                            
+                            <div>
+                                <label for="last_name" class="block text-sm font-medium text-gray-700 mb-1">نام خانوادگی</label>
+                                <input type="text" id="last_name" name="last_name" placeholder="نام خانوادگی را وارد کنید"
+                                       class="mt-1 p-3 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+                            </div>
+                            
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">ایمیل</label>
+                                <input type="email" id="email" name="email" placeholder="example@domain.com"
+                                       class="mt-1 p-3 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+                            </div>
+                            
+                            <div>
+                                <label for="start_date" class="block text-sm font-medium text-gray-700 mb-1">تاریخ شروع</label>
+                                <input type="date" id="start_date" name="start_date"
+                                       class="mt-1 p-3 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 text-gray-700">
+                            </div>
+
+                            <div>
+                                <label for="role" class="block text-sm font-medium text-gray-700 mb-1">نقش</label>
+                                <select id="role" name="role"
+                                        class="mt-1 p-3 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 bg-white">
+                                    <option value="" disabled selected>انتخاب نقش</option>
+                                    <option value="admin">مدیر (Admin)</option>
+                                    <option value="editor">ویرایشگر (Editor)</option>
+                                    <option value="viewer">بیننده (Viewer)</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="image_upload" class="block text-sm font-medium text-gray-700 mb-1">ورود عکس/فایل</label>
+                                <input type="file" id="image_upload" name="image_upload" accept="image/*"
+                                       class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 transition duration-150 cursor-pointer">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 pt-4 border-t border-gray-100">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">نوع اشتراک</label>
+                                <div class="flex items-center space-x-4 space-x-reverse">
+                                    <div class="flex items-center">
+                                        <input id="sub_basic" name="subscription" type="radio" checked
+                                               class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500 ml-2">
+                                        <label for="sub_basic" class="text-sm font-medium text-gray-700">پایه</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input id="sub_pro" name="subscription" type="radio"
+                                               class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500 ml-2">
+                                        <label for="sub_pro" class="text-sm font-medium text-gray-700">حرفه‌ای</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input id="sub_ent" name="subscription" type="radio"
+                                               class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500 ml-2">
+                                        <label for="sub_ent" class="text-sm font-medium text-gray-700">سازمانی</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">مجوزها</label>
+                                <div class="space-y-2">
+                                    <div class="flex items-center">
+                                        <input id="perm_read" name="permissions" type="checkbox" checked
+                                               class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 ml-2">
+                                        <label for="perm_read" class="text-sm font-medium text-gray-700">مجوز خواندن</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input id="perm_write" name="permissions" type="checkbox"
+                                               class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 ml-2">
+                                        <label for="perm_write" class="text-sm font-medium text-gray-700">مجوز نوشتن</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="description" class="block text-sm font-medium text-gray-700 mb-1">توضیحات تکمیلی</label>
+                            <textarea id="description" name="description" rows="3" placeholder="توضیحات اضافی را اینجا بنویسید..."
+                                      class="mt-1 p-3 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150"></textarea>
+                        </div>
+                        
+                        <div class="flex justify-end space-x-3 space-x-reverse">
+                            <button type="reset" class="px-8 py-3 border border-gray-300 rounded-lg shadow-md text-base font-medium text-gray-700 bg-white hover:bg-gray-50 transition duration-150">
+                                ریست فرم
+                            </button>
+                            <button type="submit" class="px-8 py-3 border border-transparent rounded-lg shadow-md text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150">
+                                ثبت نهایی اطلاعات
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Additional Forms Examples -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">فرم‌های دیگر</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="card p-6">
+                        <h3 class="text-lg font-semibold text-gray-700 mb-4">فرم ورود</h3>
+                        <form onsubmit="event.preventDefault(); alert('با موفقیت وارد شدید!');">
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">نام کاربری</label>
+                                <input type="text" class="mt-1 p-3 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="نام کاربری">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">رمز عبور</label>
+                                <input type="password" class="mt-1 p-3 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="رمز عبور">
+                            </div>
+                            <button type="submit" class="w-full px-4 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition duration-150">
+                                ورود به سیستم
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="card p-6">
+                        <h3 class="text-lg font-semibold text-gray-700 mb-4">فرم تماس</h3>
+                        <form onsubmit="event.preventDefault(); alert('پیام شما ارسال شد!');">
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">ایمیل</label>
+                                <input type="email" class="mt-1 p-3 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="email@example.com">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">پیام</label>
+                                <textarea rows="3" class="mt-1 p-3 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="پیام خود را بنویسید..."></textarea>
+                            </div>
+                            <button type="submit" class="w-full px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-150">
+                                ارسال پیام
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>
+

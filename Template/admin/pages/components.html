@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قطعات UI - پنل مدیریت</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <div class="flex h-screen bg-gray-100">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar fixed z-30 right-0 top-0 h-full w-64 bg-gray-800 text-white p-6 md:translate-x-0 transform transition-transform duration-300 shadow-xl">
+            <div class="flex items-center justify-between">
+                <h1 class="text-2xl font-bold mb-8 text-indigo-400">پنل مدیریت</h1>
+                <button id="close-sidebar" class="md:hidden text-2xl p-2 focus:outline-none">&times;</button>
+            </div>
+            
+            <nav class="space-y-2">
+                <a href="dashboard.html" class="flex items-center p-3 rounded-lg hover:bg-gray-700 transition duration-150">
+                    <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    <span>داشبورد اصلی</span>
+                </a>
+                <a href="charts.html" class="flex items-center p-3 rounded-lg hover:bg-gray-700 transition duration-150">
+                    <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path></svg>
+                    <span>گزارشات و نمودارها</span>
+                </a>
+                <a href="forms.html" class="flex items-center p-3 rounded-lg hover:bg-gray-700 transition duration-150">
+                    <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <span>ورودی و فرم‌ها</span>
+                </a>
+                <a href="tables.html" class="flex items-center p-3 rounded-lg hover:bg-gray-700 transition duration-150">
+                    <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+                    <span>مدیریت داده‌ها (جدول)</span>
+                </a>
+                <a href="components.html" class="flex items-center p-3 rounded-lg bg-indigo-700 hover:bg-indigo-600 transition duration-150">
+                    <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
+                    <span>قطعات UI</span>
+                </a>
+                <a href="settings.html" class="flex items-center p-3 rounded-lg hover:bg-gray-700 transition duration-150">
+                    <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37a1.724 1.724 0 002.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <span>تنظیمات</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-x-hidden overflow-y-auto md:mr-64 p-6 transition-all duration-300">
+            <div class="md:hidden flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-semibold text-gray-700">قطعات UI</h2>
+                <button id="open-sidebar" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+
+            <h1 class="text-3xl font-bold text-gray-800 mb-8 hidden md:block">قطعات رابط کاربری</h1>
+
+            <!-- Alerts Section -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Alert ها (هشدارها)</h2>
+                
+                <div class="card p-6 mb-4">
+                    <div class="bg-green-50 border-r-4 border-green-500 p-4 mb-3 flex items-start">
+                        <svg class="w-6 h-6 text-green-500 ml-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div>
+                            <h3 class="text-green-800 font-semibold">عملیات با موفقیت انجام شد!</h3>
+                            <p class="text-green-700 text-sm mt-1">تغییرات شما با موفقیت ذخیره شد.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-red-50 border-r-4 border-red-500 p-4 mb-3 flex items-start">
+                        <svg class="w-6 h-6 text-red-500 ml-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div>
+                            <h3 class="text-red-800 font-semibold">خطا در انجام عملیات!</h3>
+                            <p class="text-red-700 text-sm mt-1">لطفاً مجدداً تلاش کنید.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-yellow-50 border-r-4 border-yellow-500 p-4 mb-3 flex items-start">
+                        <svg class="w-6 h-6 text-yellow-500 ml-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                        <div>
+                            <h3 class="text-yellow-800 font-semibold">هشدار!</h3>
+                            <p class="text-yellow-700 text-sm mt-1">لطفاً توجه داشته باشید که این عملیات قابل بازگشت نیست.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-50 border-r-4 border-blue-500 p-4 flex items-start">
+                        <svg class="w-6 h-6 text-blue-500 ml-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div>
+                            <h3 class="text-blue-800 font-semibold">اطلاعات</h3>
+                            <p class="text-blue-700 text-sm mt-1">این یک پیام اطلاع‌رسانی است.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Toast Notifications Section -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Notification ها (تست انیمیشن)</h2>
+                
+                <div class="card p-6">
+                    <p class="text-gray-600 mb-4">روی دکمه‌های زیر کلیک کنید:</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <button onclick="showToast('success')" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                            موفقیت
+                        </button>
+                        <button onclick="showToast('error')" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+                            خطا
+                        </button>
+                        <button onclick="showToast('warning')" class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition">
+                            هشدار
+                        </button>
+                        <button onclick="showToast('info')" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                            اطلاعات
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Modal Section -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Modal (پاپ‌آپ)</h2>
+                
+                <div class="card p-6">
+                    <button onclick="openModal()" class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                        باز کردن Modal
+                    </button>
+                </div>
+            </section>
+
+            <!-- Progress Bar Section -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Progress Bar</h2>
+                
+                <div class="card p-6">
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-sm font-medium text-gray-700">پیشرفت پروژه</span>
+                            <span class="text-sm font-medium text-gray-700">۷۵%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-3">
+                            <div class="bg-indigo-600 h-3 rounded-full" style="width: 75%"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-sm font-medium text-gray-700">آپلود فایل</span>
+                            <span class="text-sm font-medium text-gray-700">۴۵%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-3">
+                            <div class="bg-green-600 h-3 rounded-full" style="width: 45%"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-sm font-medium text-gray-700">دانلود</span>
+                            <span class="text-sm font-medium text-gray-700">۹۰%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-3">
+                            <div class="bg-yellow-600 h-3 rounded-full" style="width: 90%"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Loading States Section -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Loading States (وضعیت بارگذاری)</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="card p-6 text-center">
+                        <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mb-4"></div>
+                        <p class="text-gray-600">در حال بارگذاری...</p>
+                    </div>
+
+                    <div class="card p-6 text-center">
+                        <div class="inline-block animate-bounce mb-4">
+                            <svg class="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                            </svg>
+                        </div>
+                        <p class="text-gray-600">در حال پردازش...</p>
+                    </div>
+
+                    <div class="card p-6 text-center">
+                        <div class="flex items-center justify-center space-x-2 space-x-reverse">
+                            <div class="w-3 h-3 bg-indigo-600 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
+                            <div class="w-3 h-3 bg-indigo-600 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
+                            <div class="w-3 h-3 bg-indigo-600 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
+                        </div>
+                        <p class="text-gray-600 mt-4">در حال ارسال...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Badges Section -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Badge ها</h2>
+                
+                <div class="card p-6">
+                    <div class="flex items-center space-x-3 space-x-reverse mb-4">
+                        <span class="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full font-semibold">فعال</span>
+                        <span class="px-3 py-1 bg-red-100 text-red-800 text-sm rounded-full font-semibold">غیرفعال</span>
+                        <span class="px-3 py-1 bg-yellow-100 text-yellow-800 text-sm rounded-full font-semibold">در انتظار</span>
+                        <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full font-semibold">جدید</span>
+                        <span class="px-3 py-1 bg-purple-100 text-purple-800 text-sm rounded-full font-semibold">ویژه</span>
+                    </div>
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <span class="px-3 py-1 bg-indigo-600 text-white text-sm rounded-full font-semibold">indigo</span>
+                        <span class="px-3 py-1 bg-gray-800 text-white text-sm rounded-full font-semibold">تیره</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed left-4 top-4 z-50 space-y-2" style="direction: ltr;">
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold text-gray-800">Modal نمونه</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <p class="text-gray-600 mb-6">این یک Modal نمونه است. می‌توانید محتوای دلخواه خود را اینجا قرار دهید.</p>
+            <div class="flex justify-end space-x-3 space-x-reverse">
+                <button onclick="closeModal()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
+                    بستن
+                </button>
+                <button onclick="closeModal()" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+                    تایید
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Toast Notification Function
+        function showToast(type) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            const config = {
+                success: { icon: '✓', text: 'عملیات با موفقیت انجام شد!', bg: 'bg-green-500' },
+                error: { icon: '✕', text: 'خطا در انجام عملیات!', bg: 'bg-red-500' },
+                warning: { icon: '⚠', text: 'هشدار! لطفاً توجه کنید.', bg: 'bg-yellow-500' },
+                info: { icon: 'ℹ', text: 'این یک پیام اطلاع‌رسانی است.', bg: 'bg-blue-500' }
+            };
+            
+            toast.className = `${config[type].bg} text-white px-6 py-3 rounded-lg shadow-lg transform transition-all duration-300 ease-in-out animate-slide-in`;
+            toast.innerHTML = `${config[type].icon} ${config[type].text}`;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('animate-slide-out');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // Modal Functions
+        function openModal() {
+            document.getElementById('modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+        }
+
+        // Close modal on outside click
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+
+    <style>
+        @keyframes slide-in {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slide-out {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+        }
+
+        .animate-slide-in {
+            animation: slide-in 0.3s ease-out;
+        }
+
+        .animate-slide-out {
+            animation: slide-out 0.3s ease-out;
+        }
+    </style>
+</body>
+</html>
+
+

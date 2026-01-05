@@ -22,16 +22,22 @@ namespace MaktabGram.Presentation.RazorPages.Pages.Posts
 
         public async Task<IActionResult> OnPostAsync(CancellationToken cancellationToken)
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
             Model.UserId = (int)GetUserId()!;
             var result = await postApplicationService.Create(Model, cancellationToken);
 
             if (result.IsSuccess)
             {
+                TempData["SuccessMessage"] = "پست با موفقیت ایجاد شد";
                 return RedirectToPage("/Account/Profile");
             }
             else
             {
-                Message = result.Message;
+                ModelState.AddModelError(string.Empty, result.Message);
                 return Page();
             }
         }

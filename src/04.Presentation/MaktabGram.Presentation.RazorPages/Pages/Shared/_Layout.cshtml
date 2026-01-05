@@ -17,98 +17,23 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Vazirmatn Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <!-- Site RTL Styles -->
+    <link rel="stylesheet" href="~/css/site-rtl.css" asp-append-version="true" />
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-
-    <style>
-        body {
-            font-family: 'Vazirmatn', sans-serif;
-            background-color: #EBEBEB;
-            color: #262626;
-            min-height: 100vh;
-        }
-
-        /* گرادینت استوری‌ها - همون رنگ شیک جدید */
-        .story-border {
-            padding: 3px;
-            background: linear-gradient(45deg, #6B46C1, #F687B3, #FBBF24);
-            border-radius: 50%;
-            cursor: pointer;
-            flex-shrink: 0;
-            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
-        }
-
-        /* مخفی کردن اسکرول‌بار در نوار استوری */
-        .story-reel::-webkit-scrollbar,
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-
-        .story-reel,
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        /* انیمیشن قلب لایک */
-        .like-overlay {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-            opacity: 0;
-            transform: scale(0);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-            .like-overlay.show {
-                opacity: 1;
-                transform: scale(1.1);
-            }
-
-        /* پست کارت‌ها */
-        .post-card {
-            border: none;
-            border-radius: 16px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-            .post-card:hover {
-                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-                transform: scale(1.005);
-            }
-
-        /* دکمه‌های اکشن */
-        .action-btn {
-            transition: all 0.15s ease;
-        }
-
-            .action-btn:hover {
-                transform: translateY(-1px);
-            }
-
-        /* الرت سفارشی */
-        #customAlert {
-            transition: all 0.3s ease;
-        }
-    </style>
 </head>
 <body class="overflow-x-hidden">
 
     <!-- هدر ثابت (مشترک همه صفحات) -->
-    <header class="fixed top-0 left-0 right-0 bg-white border-b border-gray-100 z-50 shadow-md">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+    <header class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <!-- لوگو -->
-            <a href="/" class="text-2xl font-bold text-gray-800">مکتب گرام</a>
+            <a href="/" class="text-2xl font-bold app-logo">مکتب گرام</a>
 
-            <!-- عنوان صفحه (اختیاری - فقط در صفحات خاص نمایش داده میشه) -->
+            <!-- عنوان صفحه (اختیاری - فقط در صفحات خاص نمایش داده می‌شود) -->
             <div class="hidden sm:block text-lg font-semibold text-gray-700">
                 @if (ViewData["PageTitle"] != null)
                 {
@@ -117,22 +42,34 @@
             </div>
 
             <!-- آیکون‌های ناوبری -->
-            <nav class="flex items-center space-x-6 space-x-reverse">
-                <a href="/" title="خانه"><i data-lucide="home" class="w-6 h-6 text-gray-800"></i></a>
-                <a asp-page="/Account/Search" title="جستجو"><i data-lucide="Search" class="w-6 h-6 text-gray-800"></i></a>
-                <a href="#" title="پیام‌ها"><i data-lucide="send" class="w-6 h-6 text-gray-800"></i></a>
-                <a asp-page="/Posts/Create" title="پست جدید"><i data-lucide="plus-square" class="w-6 h-6 text-gray-800"></i></a>
-                <a href="#" title="اعلان‌ها"><i data-lucide="heart" class="w-6 h-6 text-gray-800"></i></a>
-                @if (@cookieService.UserIsLoggedIn())
+            <nav class="flex items-center gap-6">
+                <a href="/" title="خانه" class="hover:scale-110 transition-transform">
+                    <i data-lucide="home" class="w-6 h-6 text-gray-800"></i>
+                </a>
+                <a asp-area="Account" asp-page="/Search" title="جستجو" class="hover:scale-110 transition-transform">
+                    <i data-lucide="search" class="w-6 h-6 text-gray-800"></i>
+                </a>
+                <a href="#" title="پیام‌ها" class="hover:scale-110 transition-transform">
+                    <i data-lucide="send" class="w-6 h-6 text-gray-800"></i>
+                </a>
+                <a asp-page="/Posts/Create" title="پست جدید" class="hover:scale-110 transition-transform">
+                    <i data-lucide="plus-square" class="w-6 h-6 text-gray-800"></i>
+                </a>
+                <a href="#" title="اعلان‌ها" class="hover:scale-110 transition-transform">
+                    <i data-lucide="heart" class="w-6 h-6 text-gray-800"></i>
+                </a>
+                @if (cookieService.UserIsLoggedIn())
                 {
-                    <a asp-page="/Account/Profile" asp-route-userId="@cookieService.GetUserId()" title="پروفایل">
-                        <div class="w-8 h-8 rounded-full overflow-hidden border-2 border-gray-600">
-
-                           @*  <a asp-page="/Account/Profile" asp-route-userId="@cookieService.GetUserId()">
-                                <img src="/@userApplicationService.GetImageProfileUrl(cookieService.GetUserId(),default)"
-                                     alt="پروفایل" class="w-full h-full object-cover">
-                            </a> *@
+                    <a asp-area="Account" asp-page="/Profile" asp-route-userId="@cookieService.GetUserId()" title="پروفایل" class="hover:scale-110 transition-transform">
+                        <div class="w-8 h-8 rounded-full overflow-hidden border-2 border-gray-300 bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold text-sm">
+                            ک
                         </div>
+                    </a>
+                }
+                else
+                {
+                    <a asp-area="Account" asp-page="/Login" class="btn-primary px-4 py-2 text-sm rounded-lg">
+                        ورود
                     </a>
                 }
             </nav>
@@ -140,19 +77,23 @@
     </header>
 
     <!-- فاصله برای هدر ثابت -->
-    <div class="pt-14 min-h-screen">
+    <div class="pt-16 min-h-screen">
         @RenderBody()
     </div>
 
-    <!-- الرت سفارشی (اختیاری - برای صفحه آپلود) -->
+    <!-- الرت سفارشی -->
     <div id="customAlert" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full shadow-2xl z-[100]">
         <p id="alertText" class="text-sm font-medium"></p>
     </div>
 
-    <!-- فعال‌سازی آیکون‌های Lucide -->
+    <!-- Scripts -->
+    <script src="~/js/site.js" asp-append-version="true"></script>
     <script>
+        // فعال‌سازی آیکون‌های Lucide
         document.addEventListener("DOMContentLoaded", () => {
-            lucide.createIcons();
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
         });
     </script>
 

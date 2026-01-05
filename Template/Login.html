@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود به مکتب گرام</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Vazirmatn Font (Persian) -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* تنظیم فونت و رنگ‌های اصلی */
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            color: #262626;
+            /* **تغییر: پس‌زمینه با گرادینت ملایم برای عمق و زندگی بیشتر** */
+            background: linear-gradient(180deg, #F0F0F5 0%, #EBEBEB 100%);
+            background-attachment: fixed; /* برای حس بهتر در اسکرول */
+        }
+
+        /* استایل سفارشی برای دکمه ورود (گرادینت جذاب) */
+        .login-button {
+            /* همان گرادینت شیک MaktabGram: بنفش، صورتی، زرد */
+            background-image: linear-gradient(to right, #6B46C1 0%, #F687B3 50%, #FBBF24 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(107, 70, 193, 0.4);
+        }
+        
+        .login-button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(107, 70, 193, 0.6);
+        }
+        
+        /* **تغییر: استایل برای لوگو برای جدا شدن از پس‌زمینه** */
+        .app-logo {
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* **تغییر: تعریف سایه بسیار برجسته و نرم برای کارت** */
+        .shadow-3xl {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <!-- کارت اصلی ورود - با گوشه‌های نرم‌تر و سایه شیک‌تر -->
+    <div class="w-full max-w-sm bg-white rounded-2xl p-8 shadow-3xl lg:p-12 transition-all duration-500 border border-gray-100">
+        
+        <!-- عنوان و لوگو -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-black text-gray-800 tracking-tight mb-2 app-logo">
+                مکتب گرام
+            </h1>
+            <p class="text-gray-500 text-sm">به جامعه خلاق ما خوش آمدید!</p>
+        </header>
+
+        <!-- فرم ورود -->
+        <form id="login-form" class="space-y-6" onsubmit="handleLogin(event)">
+            
+            <!-- ورودی شماره موبایل (تغییر یافته به تراز راست) -->
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-700 mb-1">شماره موبایل:</label>
+                <input 
+                    type="tel" 
+                    id="username" 
+                    placeholder="مثال: 09121234567"
+                    class="w-full p-3 border border-gray-300 rounded-lg text-right focus:ring-2 focus:ring-purple-400 focus:border-purple-500 transition duration-150"
+                    required
+                >
+            </div>
+            
+            <!-- ورودی رمز عبور (تغییر یافته به تراز راست) -->
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">رمز عبور:</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    placeholder="••••••••"
+                    class="w-full p-3 border border-gray-300 rounded-lg text-right focus:ring-2 focus:ring-purple-400 focus:border-purple-500 transition duration-150"
+                    required
+                >
+            </div>
+            
+            <!-- دکمه ورود (با گرادینت MaktabGram) -->
+            <button 
+                type="submit" 
+                class="login-button w-full text-white font-bold py-3 px-4 rounded-xl text-lg tracking-wide shadow-lg"
+            >
+                ورود
+            </button>
+        </form>
+        
+        <!-- پیام‌های سیستم (جایگزین alert) -->
+        <div id="message-box" class="mt-4 text-center text-sm">
+            <!-- پیام‌های موفقیت یا خطا اینجا نمایش داده می‌شوند -->
+        </div>
+
+        <!-- لینک‌های کمکی -->
+        <div class="mt-8 text-center text-sm space-y-3">
+            <a href="#" class="block text-purple-600 hover:text-purple-700 transition duration-150 font-medium">رمز عبور خود را فراموش کرده‌ام</a>
+            <p class="text-gray-600">
+                حساب کاربری ندارید؟
+                <a href="#" class="text-purple-600 hover:text-purple-700 font-bold transition duration-150 mr-1">ثبت نام کنید</a>
+            </p>
+        </div>
+
+    </div>
+
+    <!-- منطق جاوا اسکریپت برای نمایش پیام (جایگزین Alert) -->
+    <script>
+        /**
+         * تابع نمایش پیام موفقیت یا خطا
+         * @param {string} message - متنی که باید نمایش داده شود.
+         * @param {string} type - نوع پیام: 'success' یا 'error'.
+         */
+        function displayMessage(message, type) {
+            const msgBox = document.getElementById('message-box');
+            msgBox.textContent = message;
+            
+            // حذف کلاس‌های قبلی
+            msgBox.classList.remove('text-green-600', 'text-red-600');
+            
+            // افزودن کلاس بر اساس نوع
+            if (type === 'success') {
+                msgBox.classList.add('text-green-600', 'font-semibold');
+            } else if (type === 'error') {
+                msgBox.classList.add('text-red-600', 'font-semibold');
+            }
+        }
+
+        /**
+         * مدیریت رویداد ورود
+         * @param {Event} event - رویداد ارسال فرم.
+         */
+        function handleLogin(event) {
+            event.preventDefault(); 
+            
+            const mobileNumber = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // شبیه‌سازی اعتبار سنجی شماره موبایل و رمز عبور
+            // برای سادگی، فقط چک می‌کنیم که موبایل حداقل ۱۱ رقم و رمز حداقل ۶ رقم باشد.
+            if (mobileNumber.length >= 10 && password.length >= 6) {
+                // نمایش پیام موفقیت
+                displayMessage('ورود با موفقیت انجام شد! در حال انتقال به صفحه اصلی...', 'success');
+                // در یک برنامه واقعی، این قسمت به صفحه اصلی ریدایرکت می‌شود
+                // setTimeout(() => { window.location.href = '/feed'; }, 1500); 
+            } else {
+                // نمایش پیام خطا
+                displayMessage('شماره موبایل باید معتبر و رمز عبور حداقل ۶ کاراکتر باشد.', 'error');
+            }
+        }
+    </script>
+</body>
+</html>

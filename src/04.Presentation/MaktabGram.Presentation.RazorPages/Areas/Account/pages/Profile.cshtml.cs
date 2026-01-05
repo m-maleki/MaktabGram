@@ -27,12 +27,14 @@ namespace MaktabGram.Presentation.RazorPages.Pages.Account
         public async Task<IActionResult> OnGetFollowAsync(int id, CancellationToken cancellationToken)
         {
             await followerApplicationService.Follow((int)GetUserId()!, id, cancellationToken);
+            TempData["SuccessMessage"] = "شما این کاربر را دنبال کردید";
             return RedirectToPage("/Account/Profile", new { userId = id });
         }
 
         public async Task<IActionResult> OnGetUnFollowAsync(int id, CancellationToken cancellationToken)
         {
             await followerApplicationService.UnFollow((int)GetUserId()!, id, cancellationToken);
+            TempData["SuccessMessage"] = "شما این کاربر را آنفالو کردید";
             return RedirectToPage("/Account/Profile", new { userId = id });
         }
     }

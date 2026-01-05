@@ -1,0 +1,113 @@
+// Function to create modern sidebar
+function createModernSidebar(activePage = '') {
+    const sidebarHTML = `
+        <aside id="sidebar" class="sidebar fixed z-30 right-0 top-0 h-full w-64 bg-gradient-to-b from-indigo-900 to-indigo-800 text-white shadow-2xl md:translate-x-0 transform transition-transform duration-300">
+            <div class="flex items-center justify-between p-4 border-b border-indigo-700">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center ml-3">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold">پنل مدیریت</h1>
+                        <p class="text-xs text-indigo-300">Admin Panel</p>
+                    </div>
+                </div>
+                <button id="close-sidebar" class="md:hidden text-xl p-1 hover:bg-indigo-700 rounded transition">&times;</button>
+            </div>
+            
+            <nav class="p-4 space-y-1 mt-4">
+                <a href="dashboard.html" class="${activePage === 'dashboard' ? 'bg-indigo-700 shadow-lg' : ''} flex items-center p-3 rounded-xl hover:bg-indigo-700 transition-all duration-200">
+                    <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    <span>داشبورد</span>
+                </a>
+                <a href="charts.html" class="${activePage === 'charts' ? 'bg-indigo-700 shadow-lg' : ''} flex items-center p-3 rounded-xl hover:bg-indigo-700 transition-all duration-200">
+                    <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path></svg>
+                    <span>نمودارها</span>
+                </a>
+                <a href="forms.html" class="${activePage === 'forms' ? 'bg-indigo-700 shadow-lg' : ''} flex items-center p-3 rounded-xl hover:bg-indigo-700 transition-all duration-200">
+                    <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <span>فرم‌ها</span>
+                </a>
+                <a href="tables.html" class="${activePage === 'tables' ? 'bg-indigo-700 shadow-lg' : ''} flex items-center p-3 rounded-xl hover:bg-indigo-700 transition-all duration-200">
+                    <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+                    <span>جداول</span>
+                </a>
+                <a href="components.html" class="${activePage === 'components' ? 'bg-indigo-700 shadow-lg' : ''} flex items-center p-3 rounded-xl hover:bg-indigo-700 transition-all duration-200">
+                    <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
+                    <span>قطعات UI</span>
+                </a>
+                <a href="settings.html" class="${activePage === 'settings' ? 'bg-indigo-700 shadow-lg' : ''} flex items-center p-3 rounded-xl hover:bg-indigo-700 transition-all duration-200">
+                    <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37a1.724 1.724 0 002.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <span>تنظیمات</span>
+                </a>
+            </nav>
+
+            <div class="absolute bottom-4 w-full px-4">
+                <div class="bg-indigo-700 rounded-xl p-4 border border-indigo-600">
+                    <p class="text-sm font-medium mb-1">افزایش بهره‌وری</p>
+                    <p class="text-xs text-indigo-200 mb-2">۵۰٪ افزایش بازدید</p>
+                    <div class="w-full bg-indigo-800 rounded-full h-2">
+                        <div class="bg-gradient-to-r from-green-400 to-green-500 h-2 rounded-full" style="width: 50%"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    `;
+    return sidebarHTML;
+}
+
+// Function to create modern header
+function createModernHeader(pageTitle) {
+    const headerHTML = `
+        <header class="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <button id="open-sidebar" class="md:hidden text-gray-500 hover:text-gray-700">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                    <h2 class="text-2xl font-bold text-gray-800 mr-3 hidden md:block">${pageTitle}</h2>
+                </div>
+                
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <button class="relative p-2 text-gray-500 hover:bg-gray-100 rounded-lg transition">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                        <span class="absolute top-1 left-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </button>
+                    
+                    <div class="relative" id="user-menu-container">
+                        <button id="user-menu-button" onclick="toggleUserMenu()" class="flex items-center space-x-2 space-x-reverse">
+                            <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                                <span>م</span>
+                            </div>
+                            <div class="hidden md:block text-right mr-3">
+                                <p class="text-sm font-semibold text-gray-800">مسعود ملکی</p>
+                                <p class="text-xs text-gray-500">مدیر سیستم</p>
+                            </div>
+                            <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        
+                        <div id="user-menu" class="hidden absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50">
+                            <a href="#" class="flex items-center px-4 py-2 hover:bg-gray-100 transition">
+                                <svg class="w-5 h-5 ml-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                                <span class="text-sm">پروفایل</span>
+                            </a>
+                            <a href="#" class="flex items-center px-4 py-2 hover:bg-gray-100 transition">
+                                <svg class="w-5 h-5 ml-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37a1.724 1.724 0 002.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                <span class="text-sm">تنظیمات</span>
+                            </a>
+                            <hr class="my-2">
+                            <a href="#" class="flex items-center px-4 py-2 hover:bg-red-50 text-red-600 transition">
+                                <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                                <span class="text-sm">خروج</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    `;
+    return headerHTML;
+}
+
